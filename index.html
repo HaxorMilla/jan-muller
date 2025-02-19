@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang='cs'>
+	<head>
+		<meta charset='UTF-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+		<meta property='og:title' content='Jan Müller'>
+		<meta property='og:description' content='Správce počítačové sítě'>
+		<title>Jan Müller</title>
+		<link rel='icon' href='/favicon.ico'>
+		<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl' crossorigin='anonymous'>
+		<link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet' crossorigin='anonymous'>
+		<style>
+			body {
+				background-color: #000;
+				color: #fff;
+				font-family: 'Source Code Pro', monospace;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				text-align: center;
+				flex-direction: column;
+			}
+			.container {
+				max-width: 600px;
+			}
+			a {
+				color: #fff;
+				text-decoration: none;
+				font-weight: bold;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+			.blink {
+				animation: blinkText 1s infinite alternate;
+				font-size: 3rem;
+			}
+			@keyframes blinkText {
+				0% { opacity: 1; }
+				100% { opacity: 0.3; }
+			}
+			.matrix-text {
+				font-size: 1.2rem;
+				margin: 10px 0;
+			}
+			#matrixCanvas {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+				background: black;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="matrixCanvas"></canvas>
+		<div class='container'>
+			<main>
+				<h1 class='blink'>&lt;CODE/&gt;</h1>
+				<h2 class='fw-light fs-3'>Jan Müller</h2>
+				<h2 class='fw-light fs-3'>Správce počítačové sítě</h2>
+				<p class='matrix-text'>--------------------------</p>
+				<p class='matrix-text'>IT podpora v Kroměříži a online pomoc na dálku </p>
+				<p class='matrix-text'>--------------------------</p>
+				<div class='mt-4'>
+					<a href='mailto:h.muller@seznam.cz'>h.muller@seznam.cz</a>
+				</div>
+				<div class='mt-4'>
+					<a href='tel:+420776202437'>Tel: +420 776 202 437</a>
+				</div>
+				<div class='mt-4'>
+					<a href='https://www.instagram.com/jan_mulle_r_' target='_blank'>Můj Instagram</a>
+				</div>
+			</main>
+		</div>
+		<script>
+			const canvas = document.getElementById('matrixCanvas');
+			const ctx = canvas.getContext('2d');
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const characters = "01";
+			const fontSize = 16;
+			const columns = canvas.width / fontSize;
+			const drops = Array(Math.floor(columns)).fill(1);
+			function drawMatrix() {
+				ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+				ctx.fillStyle = '#a020f0'; // Fialová barva
+				ctx.font = fontSize + 'px monospace';
+				for (let i = 0; i < drops.length; i++) {
+					const text = characters[Math.floor(Math.random() * characters.length)];
+					ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+					if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+						drops[i] = 0;
+					}
+					drops[i]++;
+				}
+			}
+			setInterval(drawMatrix, 50);
+			window.addEventListener('resize', () => {
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+			});
+		</script>
+	</body>
+</html>

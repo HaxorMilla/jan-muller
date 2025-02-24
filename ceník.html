@@ -7,120 +7,67 @@
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
     <style>
-       html, body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #000;
-    color: #fff;
-    font-family: 'Source Code Pro', monospace;
-    text-align: center;
-    overflow: hidden;
-}
-
-.container {
-    max-width: 800px;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    margin-top: 20px; /* Posun ceníku níže */
-}
-
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-    max-width: 800px;
-    margin: 0 auto; /* Zarovnání tabulky na střed */
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-th, td {
-    border: 1px solid #a020f0;
-    padding: 10px;
-    text-align: center;
-    white-space: nowrap; /* Zabrání zalamování textu */
-}
-
-th {
-    background-color: #a020f0;
-    color: #fff;
-}
-
-/* 📌 Oprava pro mobilní zobrazení */
-@media (max-width: 768px) {
-    .table-container {
-        overflow-x: auto; /* Povolení horizontálního posouvání */
-    }
-
-    table {
-        display: block;
-        width: 100%;
-    }
-
-    th, td {
-        display: table-cell; /* Oprava rozhozené tabulky */
-        text-align: center;
-    }
-}
-        
-th {
-    background-color: #a020f0;
-    color: #fff;
-}
-
-a {
-    color: #a020f0;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* 📌 Responzivita pro mobilní zařízení */
-@media (max-width: 768px) {
-    .container {
-        margin-top: 10px; /* 📌 Posunutí obsahu na mobilu */
-    }
-
-    table {
-        width: 100%;
-        display: block;
-        overflow-x: auto;
-    }
-
-    th, td {
-        font-size: 14px;
-        padding: 8px;
-        display: block; /* 📌 Řeší problém s deformací na mobilech */
-        text-align: left;
-    }
-
-    th {
-        text-align: center;
-    }
-}
-
+        /* 📌 Oprava zarovnání na středu */
+        html, body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            overflow: hidden;
         }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            margin-top: 20px; /* Posun ceníku níže */
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Povolení horizontálního posouvání */
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        th, td {
+            border: 1px solid #a020f0;
+            padding: 10px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #a020f0;
+            color: #fff;
+        }
+
         a {
             color: #a020f0;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
         #matrixCanvas {
             position: fixed;
             top: 0;
@@ -130,64 +77,83 @@ a:hover {
             z-index: -1;
             background: black;
         }
+
+        /* 📌 Responzivita pro mobilní zařízení */
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+            }
+
+            th, td {
+                display: table-cell; /* Oprava rozhozené tabulky */
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
     <canvas id="matrixCanvas"></canvas>
     <div class='container'>
         <h1 class='matrix-text'>&lt;CENÍK/&gt;</h1>
-        <table>
-            <tr>
-                <th>Služba</th>
-                <th>Cena</th>
-                <th>Poznámky</th>
-            </tr>
-            <tr>
-                <td>Diagnostika počítače</td>
-                <td>Zdarma</td>
-                <td>Pokud oprava proběhne, zdarma. Jinak 200 Kč.</td>
-            </tr>
-            <tr>
-                <td>Oprava počítače</td>
-                <td>300 Kč/hod</td>
-                <td>Závisí na složitosti opravy.</td>
-            </tr>
-            <tr>
-                <td>Správa počítačové sítě</td>
-                <td>2000 Kč/měsíc</td>
-                <td>Pravidelná správa a údržba.</td>
-            </tr>
-            <tr>
-                <td>Správa webu a jiná IT pomoc</td>
-                <td>Individuální domluva</td>
-                <td>Na základě potřeb zákazníka.</td>
-            </tr>
-            <tr>
-                <td>Odvirování počítače</td>
-                <td>500 Kč</td>
-                <td>Odstranění škodlivého softwaru a zabezpečení.</td>
-            </tr>
-            <tr>
-                <td>Instalace Windows / MacOS</td>
-                <td>700 Kč</td>
-                <td>Čistá instalace nebo upgrade systému.</td>
-            </tr>
-            <tr>
-                <td>Zálohování a obnova dat</td>
-                <td>1000 Kč</td>
-                <td>Obnova smazaných nebo ztracených souborů.</td>
-            </tr>
-            <tr>
-                <td>Konzultace IT řešení</td>
-                <td>300 Kč/hod</td>
-                <td>Pomoc s výběrem a nastavením techniky.</td>
-            </tr>
-            <tr>
-                <td>Upgrade PC (výměna RAM, SSD, atd.)</td>
-                <td>400 Kč</td>
-                <td>Zrychlení a optimalizace počítače.</td>
-            </tr>
-        </table>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Služba</th>
+                    <th>Cena</th>
+                    <th>Poznámky</th>
+                </tr>
+                <tr>
+                    <td>Diagnostika počítače</td>
+                    <td>Zdarma</td>
+                    <td>Pokud oprava proběhne, zdarma. Jinak 200 Kč.</td>
+                </tr>
+                <tr>
+                    <td>Oprava počítače</td>
+                    <td>300 Kč/hod</td>
+                    <td>Závisí na složitosti opravy.</td>
+                </tr>
+                <tr>
+                    <td>Správa počítačové sítě</td>
+                    <td>2000 Kč/měsíc</td>
+                    <td>Pravidelná správa a údržba.</td>
+                </tr>
+                <tr>
+                    <td>Správa webu a jiná IT pomoc</td>
+                    <td>Individuální domluva</td>
+                    <td>Na základě potřeb zákazníka.</td>
+                </tr>
+                <tr>
+                    <td>Odvirování počítače</td>
+                    <td>500 Kč</td>
+                    <td>Odstranění škodlivého softwaru a zabezpečení.</td>
+                </tr>
+                <tr>
+                    <td>Instalace Windows / MacOS</td>
+                    <td>700 Kč</td>
+                    <td>Čistá instalace nebo upgrade systému.</td>
+                </tr>
+                <tr>
+                    <td>Zálohování a obnova dat</td>
+                    <td>1000 Kč</td>
+                    <td>Obnova smazaných nebo ztracených souborů.</td>
+                </tr>
+                <tr>
+                    <td>Konzultace IT řešení</td>
+                    <td>300 Kč/hod</td>
+                    <td>Pomoc s výběrem a nastavením techniky.</td>
+                </tr>
+                <tr>
+                    <td>Upgrade PC (výměna RAM, SSD, atd.)</td>
+                    <td>400 Kč</td>
+                    <td>Zrychlení a optimalizace počítače.</td>
+                </tr>
+            </table>
+        </div>
         <p class='matrix-text mt-4'>Máte dotaz? <a href='https://www.instagram.com/jan_mulle_r_' target='_blank'>Napište mi na Instagram!</a></p>
         <p><a href='/'>Zpět na hlavní stránku</a></p>
     </div>
@@ -230,5 +196,3 @@ a:hover {
     </script>
 </body>
 </html>
-
-

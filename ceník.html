@@ -14,13 +14,13 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between; /* 📌 Vycentrování obsahu s prostorem dole */
     align-items: center;
     background-color: #000;
     color: #fff;
     font-family: 'Source Code Pro', monospace;
     text-align: center;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .container {
@@ -29,9 +29,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     flex-grow: 1;
-    margin-top: 20px; /* Posun ceníku níže */
+    margin-top: 50px; /* 📌 Posun ceníku níže */
 }
 
 .table-container {
@@ -58,6 +57,28 @@ th, td {
 th {
     background-color: #a020f0;
     color: #fff;
+}
+
+/* 📌 Ujistí se, že tlačítko "Zpět na hlavní stránku" je vidět dole */
+.footer {
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+/* 📌 Responzivita pro mobilní zařízení */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+        max-width: 100%; /* 📌 Povolení posouvání v rámci celé obrazovky */
+    }
+
+    table {
+        width: 600px; /* 📌 Zajištění, že tabulka má pevnou šířku */
+    }
+
+    th, td {
+        white-space: nowrap; /* 📌 Zabrání zalamování textu ve sloupcích */
+    }
 }
 
 /* 📌 Responzivita pro mobilní zařízení */

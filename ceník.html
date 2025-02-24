@@ -12,30 +12,45 @@
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet' crossorigin='anonymous'>
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Source Code Pro', monospace;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #a020f0;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #a020f0;
-            color: #fff;
-        }
+    background-color: #000;
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #a020f0;
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #a020f0;
+    color: #fff;
+}
+
         .matrix-text {
             font-size: 1.2rem;
             margin: 10px 0;

@@ -7,98 +7,52 @@
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
     <style>
-        /* 📌 Oprava zarovnání na středu */
-       html, body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* 📌 Vycentrování obsahu s prostorem dole */
-    align-items: center;
-    background-color: #000;
-    color: #fff;
-    font-family: 'Source Code Pro', monospace;
-    text-align: center;
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 800px;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
-    margin-top: 50px; /* 📌 Posun ceníku níže */
-}
-
-.table-container {
-    width: 100%;
-    overflow-x: auto; /* 📌 Povolení horizontálního posouvání */
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    table-layout: fixed; /* 📌 Oprava roztažení tabulky */
-}
-
-th, td {
-    border: 1px solid #a020f0;
-    padding: 10px;
-    text-align: center;
-    word-wrap: break-word; /* 📌 Zajistí, že dlouhý text se zalomí */
-}
-
-th {
-    background-color: #a020f0;
-    color: #fff;
-}
-
-/* 📌 Ujistí se, že tlačítko "Zpět na hlavní stránku" je vidět dole */
-.footer {
-    margin-top: 30px;
-    padding-bottom: 20px;
-}
-
-/* 📌 Responzivita pro mobilní zařízení */
-@media (max-width: 768px) {
-    .table-container {
-        overflow-x: auto;
-        max-width: 100%; /* 📌 Povolení posouvání v rámci celé obrazovky */
-    }
-
-    table {
-        width: 600px; /* 📌 Zajištění, že tabulka má pevnou šířku */
-    }
-
-    th, td {
-        white-space: nowrap; /* 📌 Zabrání zalamování textu ve sloupcích */
-    }
-}
-
-/* 📌 Responzivita pro mobilní zařízení */
-@media (max-width: 768px) {
-    .table-container {
-        overflow-x: auto;
-        max-width: 100%; /* 📌 Povolení posouvání v rámci celé obrazovky */
-    }
-
-    table {
-        width: 600px; /* 📌 Zajištění, že tabulka má pevnou šířku */
-    }
-
-    th, td {
-        white-space: nowrap; /* 📌 Zabrání zalamování textu ve sloupcích */
-    }
-}
-        th {
-            background-color: #a020f0;
+        html, body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
             color: #fff;
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #a020f0;
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            text-align: left;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            color: #a020f0;
+            margin: 0;
+        }
+
+        .card p {
+            margin: 5px 0;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-bottom: 20px;
         }
 
         a {
@@ -110,30 +64,12 @@ th {
             text-decoration: underline;
         }
 
-        #matrixCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: black;
-        }
-
-        /* 📌 Responzivita pro mobilní zařízení */
-        @media (max-width: 768px) {
-            .table-container {
-                overflow-x: auto;
-            }
-
-            table {
-                display: block;
-                width: 100%;
-            }
-
-            th, td {
-                display: table-cell; /* Oprava rozhozené tabulky */
-                text-align: center;
+        /* 📌 Responzivita pro větší obrazovky */
+        @media (min-width: 768px) {
+            .card-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
         }
     </style>
@@ -142,99 +78,57 @@ th {
     <canvas id="matrixCanvas"></canvas>
     <div class='container'>
         <h1 class='matrix-text'>&lt;CENÍK/&gt;</h1>
-       <div class="table-container">
-    <table>
-        <tr>
-            <th>Služba</th>
-            <th>Cena</th>
-            <th>Poznámky</th>
-        </tr>
-        <tr>
-            <td>Diagnostika počítače</td>
-            <td>Zdarma</td>
-            <td>Pokud oprava proběhne, zdarma. Jinak 200 Kč.</td>
-        </tr>
-        <tr>
-            <td>Oprava počítače</td>
-            <td>300 Kč/hod</td>
-            <td>Závisí na složitosti opravy.</td>
-        </tr>
-        <tr>
-            <td>Správa počítačové sítě</td>
-            <td>2000 Kč/měsíc</td>
-            <td>Pravidelná správa a údržba.</td>
-        </tr>
-        <tr>
-            <td>Správa webu a jiná IT pomoc</td>
-            <td>Individuální domluva</td>
-            <td>Na základě potřeb zákazníka.</td>
-        </tr>
-        <tr>
-            <td>Odvirování počítače</td>
-            <td>500 Kč</td>
-            <td>Odstranění škodlivého softwaru a zabezpečení.</td>
-        </tr>
-        <tr>
-            <td>Instalace Windows / MacOS</td>
-            <td>700 Kč</td>
-            <td>Čistá instalace nebo upgrade systému.</td>
-        </tr>
-        <tr>
-            <td>Zálohování a obnova dat</td>
-            <td>1000 Kč</td>
-            <td>Obnova smazaných nebo ztracených souborů.</td>
-        </tr>
-        <tr>
-            <td>Konzultace IT řešení</td>
-            <td>300 Kč/hod</td>
-            <td>Pomoc s výběrem a nastavením techniky.</td>
-        </tr>
-        <tr>
-            <td>Upgrade PC (výměna RAM, SSD, atd.)</td>
-            <td>400 Kč</td>
-            <td>Zrychlení a optimalizace počítače.</td>
-        </tr>
-    </table>
-</div>
-        <p class='matrix-text mt-4'>Máte dotaz? <a href='https://www.instagram.com/jan_mulle_r_' target='_blank'>Napište mi na Instagram!</a></p>
-        <p><a href='/'>Zpět na hlavní stránku</a></p>
+        <div class="card-container">
+            <div class="card">
+                <h3>Diagnostika počítače</h3>
+                <p><b>Cena:</b> Zdarma</p>
+                <p><b>Poznámka:</b> Pokud oprava proběhne, zdarma. Jinak 200 Kč.</p>
+            </div>
+            <div class="card">
+                <h3>Oprava počítače</h3>
+                <p><b>Cena:</b> 300 Kč/hod</p>
+                <p><b>Poznámka:</b> Závisí na složitosti opravy.</p>
+            </div>
+            <div class="card">
+                <h3>Správa počítačové sítě</h3>
+                <p><b>Cena:</b> 2000 Kč/měsíc</p>
+                <p><b>Poznámka:</b> Pravidelná správa a údržba.</p>
+            </div>
+            <div class="card">
+                <h3>Správa webu a jiná IT pomoc</h3>
+                <p><b>Cena:</b> Individuální domluva</p>
+                <p><b>Poznámka:</b> Na základě potřeb zákazníka.</p>
+            </div>
+            <div class="card">
+                <h3>Odvirování počítače</h3>
+                <p><b>Cena:</b> 500 Kč</p>
+                <p><b>Poznámka:</b> Odstranění škodlivého softwaru a zabezpečení.</p>
+            </div>
+            <div class="card">
+                <h3>Instalace Windows / MacOS</h3>
+                <p><b>Cena:</b> 700 Kč</p>
+                <p><b>Poznámka:</b> Čistá instalace nebo upgrade systému.</p>
+            </div>
+            <div class="card">
+                <h3>Zálohování a obnova dat</h3>
+                <p><b>Cena:</b> 1000 Kč</p>
+                <p><b>Poznámka:</b> Obnova smazaných nebo ztracených souborů.</p>
+            </div>
+            <div class="card">
+                <h3>Konzultace IT řešení</h3>
+                <p><b>Cena:</b> 300 Kč/hod</p>
+                <p><b>Poznámka:</b> Pomoc s výběrem a nastavením techniky.</p>
+            </div>
+            <div class="card">
+                <h3>Upgrade PC (RAM, SSD, atd.)</h3>
+                <p><b>Cena:</b> 400 Kč</p>
+                <p><b>Poznámka:</b> Zrychlení a optimalizace počítače.</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Máte dotaz? <a href='https://www.instagram.com/jan_mulle_r_' target='_blank'>Napište mi na Instagram!</a></p>
+            <p><a href='/'>Zpět na hlavní stránku</a></p>
+        </div>
     </div>
-
-    <script>
-        const canvas = document.createElement('canvas');
-        canvas.id = 'matrixCanvas';
-        document.body.prepend(canvas);
-
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const characters = "01";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#a020f0'; 
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters[Math.floor(Math.random() * characters.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-
-        setInterval(drawMatrix, 50);
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
 </body>
 </html>

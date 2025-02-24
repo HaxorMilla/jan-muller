@@ -1,53 +1,159 @@
-<table>
-    <tr>
-        <th>Služba</th>
-        <th>Cena</th>
-        <th>Poznámky</th>
-    </tr>
-    <tr>
-        <td>Diagnostika počítače</td>
-        <td>Zdarma</td>
-        <td>Pokud oprava proběhne, zdarma. Jinak 200 Kč.</td>
-    </tr>
-    <tr>
-        <td>Oprava počítače</td>
-        <td>300 Kč/hod</td>
-        <td>Závisí na složitosti opravy.</td>
-    </tr>
-    <tr>
-        <td>Správa počítačové sítě</td>
-        <td>2000 Kč/měsíc</td>
-        <td>Pravidelná správa a údržba.</td>
-    </tr>
-    <tr>
-        <td>Správa webu a jiná IT pomoc</td>
-        <td>Individuální domluva</td>
-        <td>Na základě potřeb zákazníka.</td>
-    </tr>
-    <tr>
-        <td>Odvirování počítače</td>
-        <td>500 Kč</td>
-        <td>Odstranění škodlivého softwaru a zabezpečení.</td>
-    </tr>
-    <tr>
-        <td>Instalace Windows / MacOS</td>
-        <td>700 Kč</td>
-        <td>Čistá instalace nebo upgrade systému.</td>
-    </tr>
-    <tr>
-        <td>Zálohování a obnova dat</td>
-        <td>1000 Kč</td>
-        <td>Obnova smazaných nebo ztracených souborů.</td>
-    </tr>
-    <tr>
-        <td>Konzultace IT řešení</td>
-        <td>300 Kč/hod</td>
-        <td>Pomoc s výběrem a nastavením techniky.</td>
-    </tr>
-    <tr>
-        <td>Upgrade PC (výměna RAM, SSD, atd.)</td>
-        <td>400 Kč</td>
-        <td>Zrychlení a optimalizace počítače.</td>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html lang='cs'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Ceník - Jan Müller</title>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #a020f0;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #a020f0;
+            color: #fff;
+        }
+        a {
+            color: #a020f0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+    <div class='container'>
+        <h1 class='matrix-text'>&lt;CENÍK/&gt;</h1>
+        <table>
+            <tr>
+                <th>Služba</th>
+                <th>Cena</th>
+                <th>Poznámky</th>
+            </tr>
+            <tr>
+                <td>Diagnostika počítače</td>
+                <td>Zdarma</td>
+                <td>Pokud oprava proběhne, zdarma. Jinak 200 Kč.</td>
+            </tr>
+            <tr>
+                <td>Oprava počítače</td>
+                <td>300 Kč/hod</td>
+                <td>Závisí na složitosti opravy.</td>
+            </tr>
+            <tr>
+                <td>Správa počítačové sítě</td>
+                <td>2000 Kč/měsíc</td>
+                <td>Pravidelná správa a údržba.</td>
+            </tr>
+            <tr>
+                <td>Správa webu a jiná IT pomoc</td>
+                <td>Individuální domluva</td>
+                <td>Na základě potřeb zákazníka.</td>
+            </tr>
+            <tr>
+                <td>Odvirování počítače</td>
+                <td>500 Kč</td>
+                <td>Odstranění škodlivého softwaru a zabezpečení.</td>
+            </tr>
+            <tr>
+                <td>Instalace Windows / MacOS</td>
+                <td>700 Kč</td>
+                <td>Čistá instalace nebo upgrade systému.</td>
+            </tr>
+            <tr>
+                <td>Zálohování a obnova dat</td>
+                <td>1000 Kč</td>
+                <td>Obnova smazaných nebo ztracených souborů.</td>
+            </tr>
+            <tr>
+                <td>Konzultace IT řešení</td>
+                <td>300 Kč/hod</td>
+                <td>Pomoc s výběrem a nastavením techniky.</td>
+            </tr>
+            <tr>
+                <td>Upgrade PC (výměna RAM, SSD, atd.)</td>
+                <td>400 Kč</td>
+                <td>Zrychlení a optimalizace počítače.</td>
+            </tr>
+        </table>
+        <p class='matrix-text mt-4'>Máte dotaz? <a href='mailto:IT@jan-muller.cz'>Kontaktujte mě</a></p>
+        <p><a href='/'>Zpět na hlavní stránku</a></p>
+    </div>
+
+    <script>
+        const canvas = document.createElement('canvas');
+        canvas.id = 'matrixCanvas';
+        document.body.prepend(canvas);
+
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = "01";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#a020f0'; 
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
 

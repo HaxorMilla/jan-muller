@@ -1,90 +1,63 @@
+<!DOCTYPE html>
+<html lang='cs'>
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Ceník - Jan Müller</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
-
     <style>
-    html, body {
-    height: 100vh; /* Plná výška okna */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Vycentrování obsahu vertikálně */
-    align-items: center; /* Vycentrování obsahu horizontálně */
-    background-color: #000;
-    color: #fff;
-    font-family: 'Source Code Pro', monospace;
-    text-align: center;
-    overflow: hidden; /* Zabrání posouvání stránky dolů */
-}
-
-.container {
-    max-width: 800px;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Opravuje posun doprava */
-    justify-content: center;
-    flex-grow: 1;
-}
-
-.table-container {
-    width: 100%;
-    max-width: 800px;
-    overflow-x: auto;
-    margin-top: 20px;
-}
-
-table {
-    width: 100%;
-    max-width: 800px;
-    border-collapse: collapse;
-    margin: 0 auto; /* **TADY OPRAVA!** Zarovnání tabulky na střed */
-}
-
-th, td {
-    border: 1px solid #a020f0;
-    padding: 10px;
-    text-align: center;
-    white-space: nowrap;
-}
-
-th {
-    background-color: #a020f0;
-    color: #fff;
-}
-
-.purple-link {
-    color: #a020f0;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.purple-link:hover {
-    text-decoration: underline;
-}
-
-.white-text {
-    color: #fff;
-}
-
-/* Responzivita pro mobily */
-@media (max-width: 768px) {
-    th, td {
-        font-size: 14px;
-        padding: 8px;
-    }
-    table {
-        width: 100%;
-    }
-}
-
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #a020f0;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #a020f0;
+            color: #fff;
+        }
+        a {
+            color: #a020f0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: black;
+        }
     </style>
 </head>
-
 <body>
     <canvas id="matrixCanvas"></canvas>
     <div class='container'>
@@ -107,7 +80,7 @@ th {
             </tr>
             <tr>
                 <td>Správa počítačové sítě</td>
-                <td>1000 Kč/hod</td>
+                <td>2000 Kč/měsíc</td>
                 <td>Pravidelná správa a údržba.</td>
             </tr>
             <tr>
@@ -128,12 +101,12 @@ th {
             <tr>
                 <td>Zálohování a obnova dat</td>
                 <td>1000 Kč</td>
-                <td>Záloha celých PC (klonovánání).</td>
+                <td>Obnova smazaných nebo ztracených souborů.</td>
             </tr>
             <tr>
                 <td>Konzultace IT řešení</td>
                 <td>300 Kč/hod</td>
-                <td>Pomoc s výběrem techniky pro firmy.</td>
+                <td>Pomoc s výběrem a nastavením techniky.</td>
             </tr>
             <tr>
                 <td>Upgrade PC (výměna RAM, SSD, atd.)</td>
@@ -141,12 +114,8 @@ th {
                 <td>Zrychlení a optimalizace počítače.</td>
             </tr>
         </table>
-          </div>
-                <p class='matrix-text mt-4'>
-                <span class="white-text">Potřebujete rychlou radu?</span>
-                <a href='https://www.instagram.com/jan_mulle_r_' target='_blank' class="purple-link">Napište mi na Instagram!</a>
-            </p>
-                <p><a href='/'>Zpět na hlavní stránku</a></p>
+        <p class='matrix-text mt-4'>Máte dotaz? <a href='https://www.instagram.com/jan_mulle_r_' target='_blank'>Napište mi na Instagram!</a></p>
+        <p><a href='/'>Zpět na hlavní stránku</a></p>
     </div>
 
     <script>
@@ -187,4 +156,5 @@ th {
     </script>
 </body>
 </html>
+
 

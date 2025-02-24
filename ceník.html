@@ -57,6 +57,53 @@
             background: black;
         }
     </style>
+    .white-text {
+    color: #fff;
+}
+
+.purple-link {
+    color: #a020f0;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.purple-link:hover {
+    text-decoration: underline;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
+}
+
+table {
+    width: 90%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #a020f0;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap; /* Aby se text nesbalil na menších obrazovkách */
+}
+
+th {
+    background-color: #a020f0;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+    table {
+        width: 100%;
+    }
+}
 </head>
 <body>
     <canvas id="matrixCanvas"></canvas>

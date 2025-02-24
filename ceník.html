@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang='cs'>
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Ceník - Jan Müller</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
+
     <style>
         body {
             background-color: #000;
@@ -19,92 +18,57 @@
             height: 100vh;
             margin: 0;
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+
+        .white-text {
+            color: #fff;
         }
+
+        .purple-link {
+            color: #a020f0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .purple-link:hover {
+            text-decoration: underline;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
+        }
+
         table {
-            width: 80%;
+            width: 90%;
+            max-width: 800px;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         th, td {
             border: 1px solid #a020f0;
             padding: 10px;
             text-align: center;
+            white-space: nowrap; /* Aby se text nesbalil na menších obrazovkách */
         }
+
         th {
             background-color: #a020f0;
             color: #fff;
         }
-        a {
-            color: #a020f0;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        #matrixCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: black;
+
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+            table {
+                width: 100%;
+            }
         }
     </style>
-    .white-text {
-    color: #fff;
-}
-
-.purple-link {
-    color: #a020f0;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.purple-link:hover {
-    text-decoration: underline;
-}
-
-.table-container {
-    width: 100%;
-    overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
-}
-
-table {
-    width: 90%;
-    max-width: 800px;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #a020f0;
-    padding: 10px;
-    text-align: center;
-    white-space: nowrap; /* Aby se text nesbalil na menších obrazovkách */
-}
-
-th {
-    background-color: #a020f0;
-    color: #fff;
-}
-
-@media (max-width: 768px) {
-    th, td {
-        font-size: 14px;
-        padding: 8px;
-    }
-    table {
-        width: 100%;
-    }
-}
 </head>
+
 <body>
     <canvas id="matrixCanvas"></canvas>
     <div class='container'>

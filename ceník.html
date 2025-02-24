@@ -23,7 +23,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             width: 90%;
             display: flex;
             flex-direction: column;
@@ -31,33 +31,45 @@
             margin-top: 50px;
         }
 
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 📌 Automatické rozložení */
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
         .card {
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid #a020f0;
             padding: 15px;
-            margin: 10px 0;
-            width: 100%;
             text-align: left;
             border-radius: 10px;
+            min-width: 200px;
+            box-shadow: 0 0 10px rgba(160, 32, 240, 0.5);
         }
 
         .card h3 {
             color: #a020f0;
             margin: 0;
+            font-size: 1.2em;
         }
 
         .card p {
             margin: 5px 0;
+            font-size: 0.9em;
         }
 
         .footer {
             margin-top: 30px;
             padding-bottom: 20px;
+            text-align: center;
         }
 
         a {
             color: #a020f0;
             text-decoration: none;
+            font-weight: bold;
         }
 
         a:hover {
@@ -65,11 +77,9 @@
         }
 
         /* 📌 Responzivita pro větší obrazovky */
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
             .card-container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                grid-template-columns: repeat(4, 1fr); /* 📌 4 boxy vedle sebe na velkých obrazovkách */
             }
         }
     </style>
@@ -93,11 +103,6 @@
                 <h3>Správa počítačové sítě</h3>
                 <p><b>Cena:</b> 2000 Kč/měsíc</p>
                 <p><b>Poznámka:</b> Pravidelná správa a údržba.</p>
-            </div>
-            <div class="card">
-                <h3>Správa webu a jiná IT pomoc</h3>
-                <p><b>Cena:</b> Individuální domluva</p>
-                <p><b>Poznámka:</b> Na základě potřeb zákazníka.</p>
             </div>
             <div class="card">
                 <h3>Odvirování počítače</h3>

@@ -6,66 +6,76 @@
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
 
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Source Code Pro', monospace;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+      body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ujistí se, že stránka bude mít minimální výšku okna */
+    margin: 0;
+}
 
-        .white-text {
-            color: #fff;
-        }
+.container {
+    max-width: 800px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-        .purple-link {
-            color: #a020f0;
-            font-weight: bold;
-            text-decoration: none;
-        }
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
+    margin-top: 20px;
+}
 
-        .purple-link:hover {
-            text-decoration: underline;
-        }
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: auto; /* Zarovná tabulku na střed */
+}
 
-        .table-container {
-            width: 100%;
-            overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
-        }
+th, td {
+    border: 1px solid #a020f0;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap; /* Zabrání zalamování obsahu na menších displejích */
+}
 
-        table {
-            width: 90%;
-            max-width: 800px;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+th {
+    background-color: #a020f0;
+    color: #fff;
+}
 
-        th, td {
-            border: 1px solid #a020f0;
-            padding: 10px;
-            text-align: center;
-            white-space: nowrap; /* Aby se text nesbalil na menších obrazovkách */
-        }
+.purple-link {
+    color: #a020f0;
+    font-weight: bold;
+    text-decoration: none;
+}
 
-        th {
-            background-color: #a020f0;
-            color: #fff;
-        }
+.purple-link:hover {
+    text-decoration: underline;
+}
 
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 14px;
-                padding: 8px;
-            }
-            table {
-                width: 100%;
-            }
-        }
+.white-text {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+    table {
+        width: 100%;
+    }
+}
     </style>
 </head>
 

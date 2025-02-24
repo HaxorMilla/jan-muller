@@ -6,8 +6,8 @@
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
 
     <style>
-     html, body {
-    height: 100%; /* Ujistí se, že stránka má plnou výšku */
+    html, body {
+    height: 100vh; /* Plná výška okna pro správné vycentrování */
     margin: 0;
     padding: 0;
     display: flex;
@@ -18,6 +18,7 @@
     color: #fff;
     font-family: 'Source Code Pro', monospace;
     text-align: center;
+    overflow: hidden; /* Zabrání zbytečnému posouvání stránky */
 }
 
 .container {
@@ -27,13 +28,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* Tohle pomůže správně vycentrovat */
+    flex-grow: 1; /* Obsah se roztáhne do dostupné výšky */
+    margin-top: -5vh; /* Mírný posun nahoru, pokud je potřeba */
 }
 
 .table-container {
     width: 100%;
-    overflow-x: auto;
-    margin-top: 20px;
+    overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
+    max-height: 70vh; /* Omezí maximální výšku tabulky, aby se vešla na obrazovku */
+    overflow-y: auto; /* Přidá posuvník pro tabulku, pokud je moc vysoká */
 }
 
 table {
@@ -73,7 +76,13 @@ th {
 @media (max-width: 768px) {
     th, td {
         font-size: 14px;
-        padding: 
+        padding: 8px;
+    }
+    table {
+        width: 100%;
+    }
+}
+
 
     </style>
 </head>

@@ -8,37 +8,89 @@
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Source Code Pro', monospace;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #a020f0;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #a020f0;
-            color: #fff;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vycentrování obsahu vertikálně */
+    align-items: center; /* Vycentrování obsahu horizontálně */
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    margin-top: 20px; /* 📌 Posunutí ceníku níže */
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* 📌 Umožní posouvání tabulky na mobilu */
+    max-height: 70vh; /* 📌 Omezí výšku tabulky, aby se vešla na obrazovku */
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto; /* 📌 Zarovnání tabulky na střed */
+}
+
+th, td {
+    border: 1px solid #a020f0;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap; /* 📌 Zabrání zalamování textu v tabulce */
+}
+
+th {
+    background-color: #a020f0;
+    color: #fff;
+}
+
+a {
+    color: #a020f0;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 📌 Responzivita pro mobilní zařízení */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 10px; /* 📌 Posunutí obsahu na mobilu */
+    }
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+        display: block; /* 📌 Řeší problém s deformací na mobilech */
+        text-align: left;
+    }
+
+    th {
+        text-align: center;
+    }
+}
+
         }
         a {
             color: #a020f0;

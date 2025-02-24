@@ -1,35 +1,121 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang='cs'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ceník</title>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta property='og:title' content='Ceník - Jan Müller'>
+    <meta property='og:description' content='Ceník IT služeb'>
+    <title>Ceník - Jan Müller</title>
+    <link rel='icon' href='/favicon.ico'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet' crossorigin='anonymous'>
+    <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet' crossorigin='anonymous'>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        table { width: 60%; margin: auto; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 10px; }
-        th { background-color: #f2f2f2; }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #a020f0;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #a020f0;
+            color: #fff;
+        }
+        .matrix-text {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        a {
+            color: #a020f0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: black;
+        }
     </style>
 </head>
 <body>
-    <h1>Ceník služeb</h1>
-    <table>
-        <tr>
-            <th>Služba</th>
-            <th>Cena</th>
-        </tr>
-        <tr>
-            <td>Oprava počítače</td>
-            <td>500 Kč/hod</td>
-        </tr>
-        <tr>
-            <td>Oprava telefonu</td>
-            <td>300 Kč/hod</td>
-        </tr>
-        <tr>
-            <td>Správa sítě</td>
-            <td>700 Kč/měsíc</td>
-        </tr>
-    </table>
+    <canvas id="matrixCanvas"></canvas>
+    <div class='container'>
+        <h1 class='matrix-text'>&lt;CENÍK/&gt;</h1>
+        <table>
+            <tr>
+                <th>Služba</th>
+                <th>Cena</th>
+            </tr>
+            <tr>
+                <td>Oprava počítače</td>
+                <td>500 Kč/hod</td>
+            </tr>
+            <tr>
+                <td>Oprava telefonu</td>
+                <td>300 Kč/hod</td>
+            </tr>
+            <tr>
+                <td>Správa počítačové sítě</td>
+                <td>700 Kč/měsíc</td>
+            </tr>
+            <tr>
+                <td>Oprava webu</td>
+                <td>Individuální domluva</td>
+            </tr>
+        </table>
+        <p class='matrix-text mt-4'>Máte dotaz? <a href='mailto:IT@jan-muller.cz'>Kontaktujte mě</a></p>
+        <p><a href='/'>Zpět na hlavní stránku</a></p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const characters = "01";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#a020f0'; // Fialová barva
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>

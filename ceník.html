@@ -6,17 +6,18 @@
     <link href='https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap' rel='stylesheet'>
 
     <style>
-      body {
+     html, body {
+    height: 100%; /* Ujistí se, že stránka má plnou výšku */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vycentrování obsahu vertikálně */
+    align-items: center; /* Vycentrování obsahu horizontálně */
     background-color: #000;
     color: #fff;
     font-family: 'Source Code Pro', monospace;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Ujistí se, že stránka bude mít minimální výšku okna */
-    margin: 0;
 }
 
 .container {
@@ -26,11 +27,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-grow: 1; /* Tohle pomůže správně vycentrovat */
 }
 
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Posouvání tabulky na malých obrazovkách */
+    overflow-x: auto;
     margin-top: 20px;
 }
 
@@ -38,14 +40,14 @@ table {
     width: 100%;
     max-width: 800px;
     border-collapse: collapse;
-    margin: auto; /* Zarovná tabulku na střed */
+    margin: auto;
 }
 
 th, td {
     border: 1px solid #a020f0;
     padding: 10px;
     text-align: center;
-    white-space: nowrap; /* Zabrání zalamování obsahu na menších displejích */
+    white-space: nowrap;
 }
 
 th {
@@ -67,15 +69,12 @@ th {
     color: #fff;
 }
 
+/* Responzivita pro mobily */
 @media (max-width: 768px) {
     th, td {
         font-size: 14px;
-        padding: 8px;
-    }
-    table {
-        width: 100%;
-    }
-}
+        padding: 
+
     </style>
 </head>
 

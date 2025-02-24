@@ -11,13 +11,14 @@
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center; /* Vycentrování obsahu vertikálně */
     align-items: center; /* Vycentrování obsahu horizontálně */
     background-color: #000;
     color: #fff;
     font-family: 'Source Code Pro', monospace;
     text-align: center;
-    overflow: hidden; /* Zabrání zbytečnému posouvání stránky */
+    overflow: hidden; /* Zabrání posouvání stránky dolů */
 }
 
 .container {
@@ -25,24 +26,23 @@
     width: 90%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Opravuje posun doprava */
     justify-content: center;
     flex-grow: 1;
 }
 
 .table-container {
     width: 100%;
+    max-width: 800px;
     overflow-x: auto;
-    max-height: 65vh; /* Omezí výšku tabulky, aby se vešla na obrazovku */
-    overflow-y: auto;
-    margin-bottom: 20px; /* Přidá místo pod tabulkou */
+    margin-top: 20px;
 }
 
 table {
     width: 100%;
     max-width: 800px;
     border-collapse: collapse;
-    margin: auto;
+    margin: 0 auto; /* **TADY OPRAVA!** Zarovnání tabulky na střed */
 }
 
 th, td {
@@ -81,7 +81,6 @@ th {
         width: 100%;
     }
 }
-
 
     </style>
 </head>

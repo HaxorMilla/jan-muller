@@ -38,10 +38,9 @@
         let score = 0;
         let gameOver = false;
 
-       function drawBackground() {
-           ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        function drawBackground() {
+            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         }
-
 
         function drawPlayer() {
             ctx.drawImage(greenFish, player.x - player.size, player.y - player.size, player.size * 2, player.size * 2);

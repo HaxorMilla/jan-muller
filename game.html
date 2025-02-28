@@ -35,7 +35,7 @@
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
 
-        let player = { x: 50, y: 500, size: 40, speed: 10 };
+        let player = { x: 50, y: 500, size: 40, speed: 20 }; // Zvýšení rychlosti hráče
         let obstacles = [];
         let score = 0;
         let gameOver = false;
@@ -50,7 +50,7 @@
 
         function drawObstacles() {
             obstacles.forEach(obs => {
-                ctx.drawImage(enemyImage, obs.x - obs.size, obs.y - obs.size, obs.size * 2, obs.size * 2);
+                ctx.drawImage(enemyImage, obs.x - obs.size, obs.y - obs.size, obs.size * 4, obs.size * 4); // Zvětšení nepřítele 2x
             });
         }
 

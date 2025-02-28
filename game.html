@@ -111,7 +111,9 @@
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
 
     <script>
-        const leafContainer = document.getElementById("falling-leaves");
+        const leafContainer = document.createElement("div");
+leafContainer.id = "falling-leaves";
+document.body.appendChild(leafContainer);
         function createLeaf() {
             const leaf = document.createElement("img");
             leaf.src = "images/listy.png";

@@ -25,10 +25,16 @@
             background-color: #000000;
             color: white;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .game-container {
+            display: flex;
+            align-items: center;
         }
         canvas {
-            display: block;
-            margin: 20px auto;
             height: 15cm;
             width: auto;
             position: relative;
@@ -45,24 +51,44 @@
         }
         #game-over-message {
             display: none;
-            text-align: center;
             font-size: 30px;
             color: red;
             font-weight: bold;
             animation: blink 1s infinite alternate;
             margin-top: 20px;
         }
+        #score-table {
+            margin-left: 20px;
+            border-collapse: collapse;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        #score-table th, #score-table td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Silent ninja</h1>
+    <h1>Silent Ninja</h1>
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
+    <label for="player-name">Zadej své jméno: </label>
+    <input type="text" id="player-name" placeholder="Tvé jméno">
+    <button onclick="startGame()">Start</button>
     <div id="falling-leaves"></div>
-    <canvas id="gameCanvas" width="1792" height="1024"></canvas>
+    <div class="game-container">
+        <canvas id="gameCanvas" width="1792" height="1024" style="display:none;"></canvas>
+        <table id="score-table">
+            <tr>
+                <th>Jméno</th>
+                <th>Skóre</th>
+            </tr>
+        </table>
+    </div>
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
     <script>
         const leafContainer = document.getElementById("falling-leaves");
-
         function createLeaf() {
             const leaf = document.createElement("img");
             leaf.src = "images/listy.png";
@@ -80,52 +106,43 @@
 
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
-
         const background = new Image();
         background.src = "images/finally.jpeg";
-
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
-
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
-
         let player = { x: 50, y: 500, size: 40, speed: 20 };
         let obstacles = [];
         let score = 0;
         let gameOver = false;
+        let playerName = "";
 
-        function drawBackground() {
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        }
-
-        function drawPlayer() {
-            ctx.drawImage(playerImage, player.x - player.size, player.y - player.size, player.size * 2, player.size * 2);
-        }
-
-        function drawObstacles() {
-            obstacles.forEach(obs => {
-                ctx.drawImage(enemyImage, obs.x - obs.size, obs.y - obs.size, obs.size * 4, obs.size * 4);
-            });
-        }
-
-        function updateObstacles() {
-            obstacles.forEach(obs => {
-                obs.x -= obs.speed;
-                if (obs.x < -obs.size) {
-                    obs.x = canvas.width + Math.random() * 100;
-                    obs.y = Math.random() * (canvas.height - 20);
-                    score++;
-                }
-                if (Math.hypot(player.x - obs.x, player.y - obs.y) < player.size + obs.size) {
-                    gameOver = true;
-                }
-            });
+        function startGame() {
+            playerName = document.getElementById("player-name").value;
+            if (!playerName) {
+                alert("Prosím, zadej jméno!");
+                return;
+            }
+            document.getElementById("player-name").style.display = "none";
+            document.querySelector("button").style.display = "none";
+            canvas.style.display = "block";
+            gameLoop();
         }
 
         function showGameOverMessage() {
             document.getElementById("final-score").textContent = score;
             document.getElementById("game-over-message").style.display = "block";
+            addScoreToTable(playerName, score);
+        }
+
+        function addScoreToTable(name, score) {
+            let table = document.getElementById("score-table");
+            let row = table.insertRow(-1);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            cell1.innerHTML = name;
+            cell2.innerHTML = score;
         }
 
         function gameLoop() {
@@ -133,7 +150,6 @@
                 showGameOverMessage();
                 return;
             }
-
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBackground();
             drawPlayer();
@@ -171,18 +187,6 @@
             gameOver = false;
             gameLoop();
         }
-
-        obstacles.push({ x: canvas.width, y: Math.random() * canvas.height, size: 30, speed: 4 });
-        setInterval(() => {
-            if (!gameOver) {
-                obstacles.push({ x: canvas.width, y: Math.random() * canvas.height, size: 30, speed: 4 + Math.random() });
-            }
-        }, 2000);
-
-        background.onload = () => {
-            console.log("Pozadí načteno!");
-            gameLoop();
-        };
     </script>
 </body>
 </html>

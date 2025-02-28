@@ -32,8 +32,8 @@
         .game-container {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
+            align-items: center;
+            flex-direction: column;
         }
         canvas {
             height: 15cm;
@@ -65,6 +65,7 @@
             background-color: rgba(255, 255, 255, 0.1);
             width: 300px;
             text-align: center;
+            margin-top: 20px;
         }
         #score-table th, #score-table td {
             border: 1px solid white;
@@ -98,13 +99,14 @@
 
     <div class="game-container">
         <canvas id="gameCanvas" width="1792" height="1024"></canvas>
-        <table id="score-table">
-            <tr>
-                <th>Jméno</th>
-                <th>Skóre</th>
-            </tr>
-        </table>
     </div>
+    
+    <table id="score-table">
+        <tr>
+            <th>Jméno</th>
+            <th>Skóre</th>
+        </tr>
+    </table>
 
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
 
@@ -149,65 +151,8 @@
             canvas.style.display = "inline-block";
             gameLoop();
         }
-
-        function showGameOverMessage() {
-            document.getElementById("final-score").textContent = score;
-            document.getElementById("game-over-message").style.display = "block";
-            addScoreToTable(playerName, score);
-        }
-
-        function addScoreToTable(name, score) {
-            let table = document.getElementById("score-table");
-            let row = table.insertRow(-1);
-            let cell1 = row.insertCell(0);
-            let cell2 = row.insertCell(1);
-            cell1.innerHTML = name;
-            cell2.innerHTML = score;
-        }
-
-        function gameLoop() {
-            if (gameOver) {
-                showGameOverMessage();
-                return;
-            }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawBackground();
-            drawPlayer();
-            drawObstacles();
-            updateObstacles();
-            ctx.fillStyle = "white";
-            ctx.fillText("Skóre: " + score, 20, 40);
-            requestAnimationFrame(gameLoop);
-        }
-
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "ArrowUp" && player.y - player.size > 0) {
-                player.y -= player.speed;
-            }
-            if (event.key === "ArrowDown" && player.y + player.size < canvas.height) {
-                player.y += player.speed;
-            }
-            if (event.key === "ArrowLeft" && player.x - player.size > 0) {
-                player.x -= player.speed;
-            }
-            if (event.key === "ArrowRight" && player.x + player.size < canvas.width) {
-                player.x += player.speed;
-            }
-            if (event.key === "r" && gameOver) {
-                resetGame();
-            }
-        });
-
-        function resetGame() {
-            document.getElementById("game-over-message").style.display = "none";
-            player.x = 50;
-            player.y = 500;
-            obstacles = [{ x: canvas.width, y: Math.random() * canvas.height, size: 30, speed: 4 }];
-            score = 0;
-            gameOver = false;
-            gameLoop();
-        }
     </script>
 </body>
 </html>
+
 

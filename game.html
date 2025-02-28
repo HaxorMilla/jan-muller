@@ -1,120 +1,19 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninja</title>
+    <div id="game-over-message" style="display: none; text-align: center; font-size: 30px; color: red; font-weight: bold; animation: blink 1s infinite alternate;">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
     <style>
-        @keyframes falling {
-            from {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #000000;
-            color: white;
-            overflow: hidden;
-        }
-        canvas {
-            display: block;
-            margin: 20px auto;
-            height: 15cm;
-            width: auto;
-            position: relative;
-            z-index: 10;
-        }
-        #falling-leaves {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.5; }
         }
     </style>
-</head>
-<body>
-    <h1>Ninja</h1>
-    <p>Extrém Luky Extrém!</p>
-    <div id="falling-leaves"></div>
-    <canvas id="gameCanvas" width="1792" height="1024"></canvas>
     <script>
-        const leafContainer = document.getElementById("falling-leaves");
-
-        function createLeaf() {
-            const leaf = document.createElement("img");
-            leaf.src = "images/listy.png"; // Ověř, že soubor existuje
-            leaf.style.position = "absolute";
-            leaf.style.left = Math.random() * window.innerWidth + "px";
-            leaf.style.top = "-50px";
-            leaf.style.width = "50px";
-            leaf.style.height = "50px";
-            leaf.style.opacity = Math.random();
-            leaf.style.animation = `falling ${Math.random() * 5 + 3}s linear infinite`;
-            leafContainer.appendChild(leaf);
-            setTimeout(() => leaf.remove(), 7000);
-        }
-        setInterval(createLeaf, 200);
-
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
-
-        const background = new Image();
-        background.src = "images/finally.jpeg";
-
-        const playerImage = new Image();
-        playerImage.src = "images/ninja.png";
-
-        const enemyImage = new Image();
-        enemyImage.src = "images/enemy.png";
-
-        let player = { x: 50, y: 500, size: 40, speed: 20 };
-        let obstacles = [];
-        let score = 0;
-        let gameOver = false;
-
-        function drawBackground() {
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        }
-
-        function drawPlayer() {
-            ctx.drawImage(playerImage, player.x - player.size, player.y - player.size, player.size * 2, player.size * 2);
-        }
-
-        function drawObstacles() {
-            obstacles.forEach(obs => {
-                ctx.drawImage(enemyImage, obs.x - obs.size, obs.y - obs.size, obs.size * 4, obs.size * 4);
-            });
-        }
-
-        function updateObstacles() {
-            obstacles.forEach(obs => {
-                obs.x -= obs.speed;
-                if (obs.x < -obs.size) {
-                    obs.x = canvas.width + Math.random() * 100;
-                    obs.y = Math.random() * (canvas.height - 20);
-                    score++;
-                }
-                if (Math.hypot(player.x - obs.x, player.y - obs.y) < player.size + obs.size) {
-                    gameOver = true;
-                }
-            });
+        function showGameOverMessage() {
+            document.getElementById("final-score").textContent = score;
+            document.getElementById("game-over-message").style.display = "block";
         }
 
         function gameLoop() {
             if (gameOver) {
-                ctx.fillStyle = "white";
-                ctx.font = "30px Arial";
-                ctx.fillText("Game Over! Skóre: " + score, canvas.width / 2 - 100, canvas.height / 2);
-                ctx.fillText("Stiskni R pro restart", canvas.width / 2 - 120, canvas.height / 2 + 40);
+                showGameOverMessage();
                 return;
             }
 
@@ -127,45 +26,6 @@
             ctx.fillText("Skóre: " + score, 20, 40);
             requestAnimationFrame(gameLoop);
         }
-
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "ArrowUp" && player.y - player.size > 0) {
-                player.y -= player.speed;
-            }
-            if (event.key === "ArrowDown" && player.y + player.size < canvas.height) {
-                player.y += player.speed;
-            }
-            if (event.key === "ArrowLeft" && player.x - player.size > 0) {
-                player.x -= player.speed;
-            }
-            if (event.key === "ArrowRight" && player.x + player.size < canvas.width) {
-                player.x += player.speed;
-            }
-            if (event.key === "r" && gameOver) {
-                resetGame();
-            }
-        });
-
-        function resetGame() {
-            player.x = 50;
-            player.y = 500;
-            obstacles = [{ x: canvas.width, y: Math.random() * canvas.height, size: 30, speed: 4 }];
-            score = 0;
-            gameOver = false;
-            gameLoop();
-        }
-
-        obstacles.push({ x: canvas.width, y: Math.random() * canvas.height, size: 30, speed: 4 });
-        setInterval(() => {
-            if (!gameOver) {
-                obstacles.push({ x: canvas.width, y: Math.random() * canvas.height, size: 30, speed: 4 + Math.random() });
-            }
-        }, 2000);
-
-        background.onload = () => {
-            console.log("Pozadí načteno!");
-            gameLoop();
-        };
     </script>
 </body>
 </html>

@@ -94,27 +94,28 @@
         background.src = "images/finally.jpeg";
         background.onload = () => {
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+            drawGameElements();
         };
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
         let player = { x: 50, y: 400, size: 40, speed: 20 };
-        let obstacles = [];
-        let score = 0;
-        let gameOver = false;
+        function drawGameElements() {
+            ctx.drawImage(playerImage, player.x, player.y, player.size, player.size);
+            ctx.drawImage(enemyImage, 600, 400, 50, 50);
+        }
         function startGame() {
             document.getElementById('game-over-message').style.display = "none";
             requestAnimationFrame(gameLoop);
         }
         function gameLoop() {
-            if (gameOver) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+            drawGameElements();
             requestAnimationFrame(gameLoop);
         }
         window.onload = startGame;
     </script>
 </body>
 </html>
-

@@ -150,9 +150,13 @@ document.body.appendChild(leafContainer);
                 return;
             }
             document.querySelector(".login-container").style.display = "none";
-            canvas.style.display = "block"; canvas.scrollIntoView({ behavior: 'smooth' }); gameLoop();
+            canvas.style.display = "block";
+document.getElementById('game-over-message').style.display = "none";
+canvas.scrollIntoView({ behavior: 'smooth' });
+gameLoop();
             gameLoop();
         }
     </script>
 </body>
 </html>
+

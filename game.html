@@ -42,8 +42,8 @@
     </style>
 </head>
 <body>
-    <h1>Silent ninja</h1>
-    <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
+    <h1>Ninja</h1>
+    <p>Extrém Luky Extrém!</p>
     <div id="falling-leaves"></div>
     <canvas id="gameCanvas" width="1792" height="1024"></canvas>
     <script>
@@ -55,14 +55,14 @@
             leaf.style.position = "absolute";
             leaf.style.left = Math.random() * window.innerWidth + "px";
             leaf.style.top = "-50px";
-            leaf.style.width = "30px";
-            leaf.style.height = "30px";
+            leaf.style.width = "50px";
+            leaf.style.height = "50px";
             leaf.style.opacity = Math.random();
             leaf.style.animation = `falling ${Math.random() * 5 + 3}s linear infinite`;
             leafContainer.appendChild(leaf);
             setTimeout(() => leaf.remove(), 7000);
         }
-        setInterval(createLeaf, 400);
+        setInterval(createLeaf, 200);
 
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");

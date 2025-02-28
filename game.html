@@ -26,14 +26,13 @@
             color: white;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
         .game-container {
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
+            align-items: center;
         }
         canvas {
             height: 15cm;
@@ -59,42 +58,25 @@
             margin-top: 20px;
         }
         #score-table {
+            margin-left: 20px;
             border-collapse: collapse;
             color: white;
             background-color: rgba(255, 255, 255, 0.1);
-            width: 250px;
-            text-align: center;
         }
         #score-table th, #score-table td {
             border: 1px solid white;
             padding: 10px;
             text-align: center;
         }
-        .login-container {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 5px;
-        }
     </style>
 </head>
 <body>
     <h1>Silent Ninja</h1>
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
-    
-    <div class="login-container">
-        <label for="player-name">Zadej své jméno: </label>
-        <input type="text" id="player-name" placeholder="Tvé jméno">
-        <button onclick="startGame()">Start</button>
-    </div>
-
+    <label for="player-name">Zadej své jméno: </label>
+    <input type="text" id="player-name" placeholder="Tvé jméno">
+    <button onclick="startGame()">Start</button>
     <div id="falling-leaves"></div>
-
     <div class="game-container">
         <canvas id="gameCanvas" width="1792" height="1024" style="display:none;"></canvas>
         <table id="score-table">
@@ -104,9 +86,7 @@
             </tr>
         </table>
     </div>
-
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
-
     <script>
         const leafContainer = document.getElementById("falling-leaves");
         function createLeaf() {
@@ -144,8 +124,9 @@
                 alert("Prosím, zadej jméno!");
                 return;
             }
-            document.querySelector(".login-container").style.display = "none";
-            canvas.style.display = "block";
+            document.getElementById("player-name").style.display = "none";
+            document.querySelector("button").style.display = "none";
+            canvas.style.display = "inline-block"; gameLoop();
             gameLoop();
         }
 

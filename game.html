@@ -6,58 +6,63 @@
     <title>Ninja</title>
     <style>
         @keyframes falling {
-    from {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
+            from {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
         body {
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #000000;
             color: white;
+            overflow: hidden;
         }
         canvas {
             display: block;
             margin: 20px auto;
             height: 15cm;
             width: auto;
+            position: relative;
+            z-index: 10;
         }
-        <div id="falling-leaves"></div>
-
+        #falling-leaves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
     </style>
-    
 </head>
 <body>
     <h1>Silent ninja</h1>
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
+    <div id="falling-leaves"></div>
     <canvas id="gameCanvas" width="1792" height="1024"></canvas>
     <script>
         const leafContainer = document.getElementById("falling-leaves");
 
-function createLeaf() {
-    const leaf = document.createElement("img");
-    leaf.src = "images/listy.png"; // Ověř, že soubor existuje
-    leaf.style.position = "absolute";
-    leaf.style.left = Math.random() * window.innerWidth + "px";
-    leaf.style.top = "-50px";
-    leaf.style.width = "30px"; // Větší listky pro lepší viditelnost
-    leaf.style.height = "30px";
-    leaf.style.opacity = Math.random();
-    leaf.style.animation = `falling ${Math.random() * 5 + 3}s linear infinite`;
-    leafContainer.appendChild(leaf);
-
-    // Listky se odstraní po 7 sekundách
-    setTimeout(() => leaf.remove(), 7000);
-}
-
-// Spouští nové listky každých 400 ms
-setInterval(createLeaf, 400);
+        function createLeaf() {
+            const leaf = document.createElement("img");
+            leaf.src = "images/listy.png"; // Ověř, že soubor existuje
+            leaf.style.position = "absolute";
+            leaf.style.left = Math.random() * window.innerWidth + "px";
+            leaf.style.top = "-50px";
+            leaf.style.width = "30px";
+            leaf.style.height = "30px";
+            leaf.style.opacity = Math.random();
+            leaf.style.animation = `falling ${Math.random() * 5 + 3}s linear infinite`;
+            leafContainer.appendChild(leaf);
+            setTimeout(() => leaf.remove(), 7000);
+        }
+        setInterval(createLeaf, 400);
 
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -75,35 +80,6 @@ setInterval(createLeaf, 400);
         let obstacles = [];
         let score = 0;
         let gameOver = false;
-
-        const leaves = [];
-        for (let i = 0; i < 50; i++) {
-            leaves.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 5 + 2,
-                speed: Math.random() * 2 + 1,
-            });
-        }
-
-        function drawLeaves() {
-            ctx.fillStyle = "#32CD32";
-            leaves.forEach(leaf => {
-                ctx.beginPath();
-                ctx.arc(leaf.x, leaf.y, leaf.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-        }
-
-        function updateLeaves() {
-            leaves.forEach(leaf => {
-                leaf.y += leaf.speed;
-                if (leaf.y > canvas.height) {
-                    leaf.y = -leaf.size;
-                    leaf.x = Math.random() * canvas.width;
-                }
-            });
-        }
 
         function drawBackground() {
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -144,11 +120,9 @@ setInterval(createLeaf, 400);
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBackground();
-            drawLeaves();
             drawPlayer();
             drawObstacles();
             updateObstacles();
-            updateLeaves();
             ctx.fillStyle = "white";
             ctx.fillText("Skóre: " + score, 20, 40);
             requestAnimationFrame(gameLoop);

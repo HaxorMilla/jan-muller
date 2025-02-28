@@ -1,5 +1,20 @@
 <!DOCTYPE html>
-<html lang='cs'>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Fish Dodge</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
     <h1>Green Fish Dodge</h1>
@@ -10,13 +25,13 @@
         const ctx = canvas.getContext("2d");
 
         const background = new Image();
-        background.src = "777f4e90abf163a474e5cb31cde7ce51.gif";
+        background.src = "images/mapa.gif";
 
         const greenFish = new Image();
-        greenFish.src = "green_fish.png";
+        greenFish.src = "images/green_fish.png";
 
         const redFish = new Image();
-        redFish.src = "red_fish.png";
+        redFish.src = "images/red_fish.png";
 
         let player = { x: 20, y: 250, size: 20, speed: 5 };
         let obstacles = [];

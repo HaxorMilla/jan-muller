@@ -36,11 +36,12 @@
             flex-direction: column;
         }
         canvas {
-            height: 15cm;
-            width: auto;
+            height: 500px;
+            width: 800px;
             position: relative;
             z-index: 10;
             display: block;
+            background: black;
         }
         #falling-leaves {
             position: fixed;
@@ -66,7 +67,7 @@
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
     <div id="falling-leaves"></div>
     <div class="game-container">
-        <canvas id="gameCanvas" width="1792" height="1024"></canvas>
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
     </div>
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
     <script>
@@ -91,19 +92,29 @@
         const ctx = canvas.getContext("2d");
         const background = new Image();
         background.src = "images/finally.jpeg";
+        background.onload = () => {
+            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        };
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
-        let player = { x: 50, y: 500, size: 40, speed: 20 };
+        let player = { x: 50, y: 400, size: 40, speed: 20 };
         let obstacles = [];
         let score = 0;
         let gameOver = false;
         function startGame() {
             document.getElementById('game-over-message').style.display = "none";
-            gameLoop();
+            requestAnimationFrame(gameLoop);
+        }
+        function gameLoop() {
+            if (gameOver) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(gameLoop);
         }
         window.onload = startGame;
     </script>
 </body>
 </html>
+

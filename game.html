@@ -36,12 +36,11 @@
             flex-direction: column;
         }
         canvas {
-            height: 500px;
-            width: 800px;
+            height: 15cm;
+            width: auto;
             position: relative;
             z-index: 10;
-            display: block;
-            background: black;
+            display: none;
         }
         #falling-leaves {
             position: fixed;
@@ -60,20 +59,61 @@
             animation: blink 1s infinite alternate;
             margin-top: 20px;
         }
+        #score-table {
+            border-collapse: collapse;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 300px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #score-table th, #score-table td {
+            border: 1px solid white;
+            padding: 15px;
+            text-align: center;
+        }
+        .login-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>Silent Ninja</h1>
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
-    <div id="falling-leaves"></div>
-    <div class="game-container">
-        <canvas id="gameCanvas" width="800" height="500"></canvas>
+    
+    <div class="login-container">
+        <label for="player-name">Zadej své jméno: </label>
+        <input type="text" id="player-name" placeholder="Tvé jméno">
+        <button onclick="startGame()">Start</button>
     </div>
+
+    <div id="falling-leaves"></div>
+
+    <div class="game-container">
+        <canvas id="gameCanvas" width="1792" height="1024"></canvas>
+    </div>
+    
+    <table id="score-table">
+        <tr>
+            <th>Jméno</th>
+            <th>Skóre</th>
+        </tr>
+    </table>
+
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
+
     <script>
         const leafContainer = document.createElement("div");
-        leafContainer.id = "falling-leaves";
-        document.body.appendChild(leafContainer);
+leafContainer.id = "falling-leaves";
+document.body.appendChild(leafContainer);
         function createLeaf() {
             const leaf = document.createElement("img");
             leaf.src = "images/listy.png";
@@ -88,34 +128,34 @@
             setTimeout(() => leaf.remove(), 7000);
         }
         setInterval(createLeaf, 400);
+
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const background = new Image();
         background.src = "images/finally.jpeg";
-        background.onload = () => {
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            drawGameElements();
-        };
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
-        let player = { x: 50, y: 400, size: 40, speed: 20 };
-        function drawGameElements() {
-            ctx.drawImage(playerImage, player.x, player.y, player.size, player.size);
-            ctx.drawImage(enemyImage, 600, 400, 50, 50);
-        }
+        let player = { x: 50, y: 500, size: 40, speed: 20 };
+        let obstacles = [];
+        let score = 0;
+        let gameOver = false;
+        let playerName = "";
+
         function startGame() {
-            document.getElementById('game-over-message').style.display = "none";
-            requestAnimationFrame(gameLoop);
+            playerName = document.getElementById("player-name").value;
+            if (!playerName) {
+                alert("Prosím, zadej jméno!");
+                return;
+            }
+            document.querySelector(".login-container").style.display = "none";
+            canvas.style.display = "block";
+document.getElementById('game-over-message').style.display = "none";
+canvas.scrollIntoView({ behavior: 'smooth' });
+gameLoop();
+            gameLoop();
         }
-        function gameLoop() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            drawGameElements();
-            requestAnimationFrame(gameLoop);
-        }
-        window.onload = startGame;
     </script>
 </body>
 </html>

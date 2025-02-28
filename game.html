@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninja</title>
     <style>
+        @keyframes falling {
+    from {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
         body {
             text-align: center;
             font-family: Arial, sans-serif;
@@ -17,13 +28,37 @@
             height: 15cm;
             width: auto;
         }
+        <div id="falling-leaves"></div>
+
     </style>
+    
 </head>
 <body>
     <h1>Silent ninja</h1>
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
     <canvas id="gameCanvas" width="1792" height="1024"></canvas>
     <script>
+        const leafContainer = document.getElementById("falling-leaves");
+
+function createLeaf() {
+    const leaf = document.createElement("img");
+    leaf.src = "images/listy.png"; // Ověř, že soubor existuje
+    leaf.style.position = "absolute";
+    leaf.style.left = Math.random() * window.innerWidth + "px";
+    leaf.style.top = "-50px";
+    leaf.style.width = "30px"; // Větší listky pro lepší viditelnost
+    leaf.style.height = "30px";
+    leaf.style.opacity = Math.random();
+    leaf.style.animation = `falling ${Math.random() * 5 + 3}s linear infinite`;
+    leafContainer.appendChild(leaf);
+
+    // Listky se odstraní po 7 sekundách
+    setTimeout(() => leaf.remove(), 7000);
+}
+
+// Spouští nové listky každých 400 ms
+setInterval(createLeaf, 400);
+
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 

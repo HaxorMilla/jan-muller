@@ -13,7 +13,7 @@
         canvas {
             display: block;
             margin: 20px auto;
-            height: 15cm; /* Nastavení výšky canvasu na 5 cm */
+            height: 15cm; /* Nastavení výšky canvasu na 15 cm */
             width: auto;
         }
     </style>
@@ -29,11 +29,11 @@
         const background = new Image();
         background.src = "images/finally.jpeg"; // Správná cesta k pozadí
 
-        const greenFish = new Image();
-        greenFish.src = "images/green_fish.png";
+        const playerImage = new Image();
+        playerImage.src = "images/ninja.jpeg";
 
-        const redFish = new Image();
-        redFish.src = "images/red_fish.png";
+        const enemyImage = new Image();
+        enemyImage.src = "images/enemy.jpeg";
 
         let player = { x: 50, y: 500, size: 40, speed: 10 };
         let obstacles = [];
@@ -45,12 +45,12 @@
         }
 
         function drawPlayer() {
-            ctx.drawImage(greenFish, player.x - player.size, player.y - player.size, player.size * 2, player.size * 2);
+            ctx.drawImage(playerImage, player.x - player.size, player.y - player.size, player.size * 2, player.size * 2);
         }
 
         function drawObstacles() {
             obstacles.forEach(obs => {
-                ctx.drawImage(redFish, obs.x - obs.size, obs.y - obs.size, obs.size * 2, obs.size * 2);
+                ctx.drawImage(enemyImage, obs.x - obs.size, obs.y - obs.size, obs.size * 2, obs.size * 2);
             });
         }
 
@@ -128,3 +128,4 @@
     </script>
 </body>
 </html>
+

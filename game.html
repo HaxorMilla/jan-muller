@@ -4,16 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🥷Ninja rush🥷</title>
-    <title>Ninja</title>
     <style>
         body {
             text-align: center;
-@@ -23,14 +23,40 @@
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .game-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
         }
         canvas {
             width: 1600px;
-            width: 1000px;
             height: 700px;
             position: relative;
             z-index: 10;
@@ -50,29 +60,54 @@
         #score-table {
             display: none;
             border-collapse: collapse;
-@@ -48,8 +74,10 @@
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 300px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #score-table th, #score-table td {
+            border: 1px solid white;
+            padding: 15px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <h1>🥷Ninja🥷</h1>
-    <p>Extrém Luky! Marťo vidím slzy!?</p>
-    <h1>Silent Ninja</h1>
-    <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
+    <p>Extrém Luky!Vidím slzy Marťo?!</p>
     
     <div id="falling-leaves"></div>
-
+    
     <div class="login-container">
         <label for="player-name">Zadej své jméno: </label>
-@@ -69,6 +97,17 @@
-    </table>
+        <input type="text" id="player-name" placeholder="Tvé jméno">
+        <button onclick="startGame()">Start</button>
+    </div>
 
+    <div class="game-container">
+        <canvas id="gameCanvas" width="1600" height="700"></canvas>
+    </div>
+    
+    <table id="score-table">
+        <tr>
+            <th>Jméno</th>
+            <th>Skóre</th>
+        </tr>
+    </table>
+    
     <script>
         function createLeaf() {
             const leaf = document.createElement("img");
             leaf.src = "images/listy.png";
             leaf.className = "leaf";
             leaf.style.left = Math.random() * window.innerWidth + "px";
+            leaf.style.top = "-50px";
+            leaf.style.width = Math.random() * 30 + 20 + "px"; 
+            leaf.style.height = leaf.style.width; 
+            leaf.style.opacity = Math.random();
             leaf.style.animationDuration = (Math.random() * 5 + 3) + "s";
+            leaf.style.position = "absolute";
             document.getElementById("falling-leaves").appendChild(leaf);
             setTimeout(() => leaf.remove(), 7000);
         }
@@ -81,7 +116,61 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const playerImage = new Image();
-@@ -130,44 +169,6 @@
+        playerImage.src = "images/ninja.png";
+        const enemyImage = new Image();
+        enemyImage.src = "images/enemy.png";
+        
+        let player = { x: 50, y: 400, width: 50, height: 50, speed: 10 };
+        let enemies = [];
+        let gameOver = false;
+        let score = 0;
+        let scores = [];
+        let playerName = "";
+        let keys = {};
+
+        window.addEventListener("keydown", (event) => {
+            keys[event.key] = true;
+        });
+        window.addEventListener("keyup", (event) => {
+            keys[event.key] = false;
+        });
+
+        function startGame() {
+            playerName = document.getElementById("player-name").value || "Neznámý hráč";
+            document.querySelector(".login-container").style.display = "none";
+            canvas.style.display = "block";
+            document.getElementById("score-table").style.display = "none";
+            gameOver = false;
+            score = 0;
+            enemies = [];
+            requestAnimationFrame(gameLoop);
+        }
+
+        function update() {
+            if (gameOver) return;
+            if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
+            if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
+            if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
+            if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
+            
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                enemies[i].x -= 5;
+                if (enemies[i].x + enemies[i].width < 0) {
+                    score++;
+                    enemies.splice(i, 1);
+                } else if (
+                    player.x < enemies[i].x + enemies[i].width &&
+                    player.x + player.width > enemies[i].x &&
+                    player.y < enemies[i].y + enemies[i].height &&
+                    player.y + player.height > enemies[i].y
+                ) {
+                    gameOver = true;
+                    endGame();
+                    return;
+                }
+            }
+            if (Math.random() < 0.05) {
+                let randomY = Math.random() * (canvas.height - 50);
                 enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
             }
         }

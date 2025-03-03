@@ -58,11 +58,25 @@
             animation: blink 1s infinite alternate;
             margin-top: 20px;
         }
+        #score-table {
+            display: none;
+            border-collapse: collapse;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 300px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #score-table th, #score-table td {
+            border: 1px solid white;
+            padding: 15px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Drsný hekr honzíček představuje: Ninja rush!</h1>
-    <p>Extrém tohle!</p>
+    <h1>Silent Ninja</h1>
+    <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
     
     <div id="falling-leaves"></div>
     
@@ -76,28 +90,18 @@
         <canvas id="gameCanvas" width="800" height="500"></canvas>
     </div>
     
-    <div id="game-over-message">Vidím slzy?! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
+    <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
+    
+    <table id="score-table">
+        <tr>
+            <th>Jméno</th>
+            <th>Skóre</th>
+        </tr>
+    </table>
     
     <script>
-        const leafContainer = document.getElementById("falling-leaves");
-        function createLeaf() {
-            const leaf = document.createElement("img");
-            leaf.src = "images/listy.png";
-            leaf.style.position = "absolute";
-            leaf.style.left = Math.random() * window.innerWidth + "px";
-            leaf.style.top = "-50px";
-            leaf.style.width = "50px";
-            leaf.style.height = "50px";
-            leaf.style.opacity = Math.random();
-            leaf.style.animation = `falling ${Math.random() * 5 + 3}s linear infinite`;
-            leafContainer.appendChild(leaf);
-            setTimeout(() => leaf.remove(), 7000);
-        }
-        setInterval(createLeaf, 400);
-        
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
-        
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
         const enemyImage = new Image();
@@ -108,14 +112,17 @@
         let gameOver = false;
         let score = 0;
         let keys = {};
-        
+        let scores = [];
+        let playerName = "";
+
         window.addEventListener("keydown", (event) => {
             keys[event.key] = true;
             if (event.key.toUpperCase() === "R" && gameOver) restartGame();
         });
         window.addEventListener("keyup", (event) => keys[event.key] = false);
-        
+
         function startGame() {
+            playerName = document.getElementById("player-name").value || "Neznámý hráč";
             document.querySelector(".login-container").style.display = "none";
             canvas.style.display = "block";
             gameOver = false;
@@ -124,7 +131,7 @@
             document.getElementById("game-over-message").style.display = "none";
             requestAnimationFrame(gameLoop);
         }
-        
+
         function update() {
             if (gameOver) return;
             if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
@@ -146,7 +153,6 @@
                     return;
                 }
             }
-            
             if (Math.random() < 0.05) {
                 let randomY = Math.random() * (canvas.height - 50);
                 enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
@@ -156,8 +162,8 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-            for (let i = 0; i < enemies.length; i++) {
-                ctx.drawImage(enemyImage, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
+            for (let enemy of enemies) {
+                ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
             }
             ctx.fillStyle = "white";
             ctx.font = "20px Arial";
@@ -171,18 +177,16 @@
                 requestAnimationFrame(gameLoop);
             }
         }
-        
+
         function endGame() {
             document.getElementById("game-over-message").style.display = "block";
             document.getElementById("final-score").textContent = score;
+            scores.push({ name: playerName, score: score });
+            updateScoreTable();
         }
-        
+
         function restartGame() {
-            gameOver = false;
-            score = 0;
-            enemies = [];
-            document.getElementById("game-over-message").style.display = "none";
-            requestAnimationFrame(gameLoop);
+            startGame();
         }
     </script>
 </body>

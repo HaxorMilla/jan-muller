@@ -108,6 +108,17 @@
     <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
 
     <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const background = new Image();
+        background.src = "images/finally.jpeg";
+        const playerImage = new Image();
+        playerImage.src = "images/ninja.png";
+        const enemyImage = new Image();
+        enemyImage.src = "images/enemy.png";
+        
+        let player = { x: 50, y: 400, size: 40, speed: 20 };
+        
         function startGame() {
             const playerName = document.getElementById("player-name").value;
             if (!playerName) {
@@ -115,8 +126,16 @@
                 return;
             }
             document.querySelector(".login-container").style.display = "none";
-            document.getElementById("gameCanvas").style.display = "block";
+            canvas.style.display = "block";
             gameLoop();
+        }
+        
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(playerImage, player.x, player.y, player.size, player.size);
+            ctx.drawImage(enemyImage, 600, 400, 50, 50);
+            requestAnimationFrame(gameLoop);
         }
         
         function endGame(score) {

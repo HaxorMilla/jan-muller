@@ -40,24 +40,6 @@
             pointer-events: none;
             z-index: 1;
         }
-        @keyframes falling {
-            from {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        #game-over-message {
-            display: none;
-            font-size: 30px;
-            color: red;
-            font-weight: bold;
-            animation: blink 1s infinite alternate;
-            margin-top: 20px;
-        }
         #score-table {
             display: none;
             border-collapse: collapse;
@@ -90,8 +72,6 @@
         <canvas id="gameCanvas" width="800" height="500"></canvas>
     </div>
     
-    <div id="game-over-message">Game Over! Skóre: <span id="final-score"></span><br>Stiskni R pro restart</div>
-    
     <table id="score-table">
         <tr>
             <th>Jméno</th>
@@ -111,15 +91,8 @@
         let enemies = [];
         let gameOver = false;
         let score = 0;
-        let keys = {};
         let scores = [];
         let playerName = "";
-
-        window.addEventListener("keydown", (event) => {
-            keys[event.key] = true;
-            if (event.key.toUpperCase() === "R" && gameOver) restartGame();
-        });
-        window.addEventListener("keyup", (event) => keys[event.key] = false);
 
         function startGame() {
             playerName = document.getElementById("player-name").value || "Neznámý hráč";
@@ -128,7 +101,6 @@
             gameOver = false;
             score = 0;
             enemies = [];
-            document.getElementById("game-over-message").style.display = "none";
             document.getElementById("score-table").style.display = "none";
             requestAnimationFrame(gameLoop);
         }
@@ -180,10 +152,22 @@
         }
 
         function endGame() {
-            document.getElementById("game-over-message").style.display = "block";
-            document.getElementById("final-score").textContent = score;
             scores.push({ name: playerName, score: score });
             updateScoreTable();
+            document.querySelector(".login-container").style.display = "block";
+            canvas.style.display = "none";
+        }
+
+        function updateScoreTable() {
+            let table = document.getElementById("score-table");
+            table.style.display = "table";
+            table.innerHTML = "<tr><th>Jméno</th><th>Skóre</th></tr>";
+            scores.sort((a, b) => b.score - a.score);
+            scores.forEach(entry => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = entry.name;
+                row.insertCell(1).textContent = entry.score;
+            });
         }
     </script>
 </body>

@@ -129,53 +129,8 @@
             score = 0;
             enemies = [];
             document.getElementById("game-over-message").style.display = "none";
+            document.getElementById("score-table").style.display = "none";
             requestAnimationFrame(gameLoop);
-        }
-
-        function update() {
-            if (gameOver) return;
-            if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
-            if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
-            
-            for (let i = enemies.length - 1; i >= 0; i--) {
-                enemies[i].x -= 5;
-                if (enemies[i].x + enemies[i].width < 0) {
-                    score++;
-                    enemies.splice(i, 1);
-                } else if (
-                    player.x < enemies[i].x + enemies[i].width &&
-                    player.x + player.width > enemies[i].x &&
-                    player.y < enemies[i].y + enemies[i].height &&
-                    player.y + player.height > enemies[i].y
-                ) {
-                    gameOver = true;
-                    endGame();
-                    return;
-                }
-            }
-            if (Math.random() < 0.05) {
-                let randomY = Math.random() * (canvas.height - 50);
-                enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
-            }
-        }
-        
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-            for (let enemy of enemies) {
-                ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
-            }
-            ctx.fillStyle = "white";
-            ctx.font = "20px Arial";
-            ctx.fillText("Skóre: " + score, 10, 30);
-        }
-        
-        function gameLoop() {
-            update();
-            draw();
-            if (!gameOver) {
-                requestAnimationFrame(gameLoop);
-            }
         }
 
         function endGame() {
@@ -185,8 +140,16 @@
             updateScoreTable();
         }
 
-        function restartGame() {
-            startGame();
+        function updateScoreTable() {
+            let table = document.getElementById("score-table");
+            table.style.display = "table";
+            table.innerHTML = "<tr><th>Jméno</th><th>Skóre</th></tr>";
+            scores.sort((a, b) => b.score - a.score);
+            scores.forEach(entry => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = entry.name;
+                row.insertCell(1).textContent = entry.score;
+            });
         }
     </script>
 </body>

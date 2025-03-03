@@ -4,26 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🥷Ninja rush🥷</title>
+    <title>Ninja</title>
     <style>
         body {
             text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #000000;
-            color: white;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-        .game-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+@@ -23,14 +23,40 @@
             flex-direction: column;
         }
         canvas {
             width: 1600px;
+            width: 1000px;
             height: 700px;
             position: relative;
             z-index: 10;
@@ -60,101 +50,78 @@
         #score-table {
             display: none;
             border-collapse: collapse;
-            color: white;
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 300px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        #score-table th, #score-table td {
-            border: 1px solid white;
-            padding: 15px;
-            text-align: center;
-        }
+@@ -48,8 +74,10 @@
     </style>
 </head>
 <body>
     <h1>🥷Ninja🥷</h1>
-    <p>Extrém Luky!Vidím slzy Marťo?!</p>
+    <p>Extrém Luky! Marťo vidím slzy!?</p>
+    <h1>Silent Ninja</h1>
+    <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
     
     <div id="falling-leaves"></div>
-    
+
     <div class="login-container">
         <label for="player-name">Zadej své jméno: </label>
-        <input type="text" id="player-name" placeholder="Tvé jméno">
-        <button onclick="startGame()">Start</button>
-    </div>
-
-    <div id="lives-container">
-        <img src="images/srdce.png" class="life" id="life1">
-        <img src="images/srdce.png" class="life" id="life2">
-        <img src="images/srdce.png" class="life" id="life3">
-    </div>
-
-    <div class="game-container">
-        <canvas id="gameCanvas" width="1600" height="700"></canvas>
-    </div>
-    
-    <table id="score-table">
-        <tr>
-            <th>Jméno</th>
-            <th>Skóre</th>
-        </tr>
+@@ -69,6 +97,17 @@
     </table>
-    
+
     <script>
-        const powerUps = [];
-        const powerUpTypes = ["invisibility", "slow", "extraLife"];
-        const powerUpImages = {
-            invisibility: "images/neviditelnost.png",
-            slow: "images/sleep.png",
-            extraLife: "images/srdce.png"
-        };
-        let isInvisible = false;
-        let gameOver = false;
+        function createLeaf() {
+            const leaf = document.createElement("img");
+            leaf.src = "images/listy.png";
+            leaf.className = "leaf";
+            leaf.style.left = Math.random() * window.innerWidth + "px";
+            leaf.style.animationDuration = (Math.random() * 5 + 3) + "s";
+            document.getElementById("falling-leaves").appendChild(leaf);
+            setTimeout(() => leaf.remove(), 7000);
+        }
+        setInterval(createLeaf, 500);
         
-        function createPowerUp() {
-            if (Math.random() < 0.02) {
-                let type = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
-                powerUps.push({ x: Math.random() * (canvas.width - 50), y: Math.random() * (canvas.height - 50), width: 40, height: 40, type: type });
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const playerImage = new Image();
+@@ -130,44 +169,6 @@
+                enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
             }
         }
         
-        function checkPowerUpCollision() {
-            for (let i = powerUps.length - 1; i >= 0; i--) {
-                if (
-                    player.x < powerUps[i].x + 40 &&
-                    player.x + player.width > powerUps[i].x &&
-                    player.y < powerUps[i].y + 40 &&
-                    player.y + player.height > powerUps[i].y
-                ) {
-                    activatePowerUp(powerUps[i].type);
-                    powerUps.splice(i, 1);
-                }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+            for (let enemy of enemies) {
+                ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
             }
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.fillText("Skóre: " + score, 10, 30);
         }
         
-        function activatePowerUp(type) {
-            if (type === "invisibility") {
-                isInvisible = true;
-                setTimeout(() => isInvisible = false, 5000);
-            } else if (type === "slow") {
-                enemySpeed /= 2;
-                setTimeout(() => enemySpeed *= 2, 5000);
-            } else if (type === "extraLife") {
-                if (lives < 3) {
-                    lives++;
-                    document.getElementById('life' + lives).style.display = 'inline';
-                }
+        function gameLoop() {
+            update();
+            draw();
+            if (!gameOver) {
+                requestAnimationFrame(gameLoop);
             }
         }
-        
-        function drawPowerUps() {
-            for (let powerUp of powerUps) {
-                let img = new Image();
-                img.src = powerUpImages[powerUp.type];
-                ctx.drawImage(img, powerUp.x, powerUp.y, 40, 40);
-            }
+
+        function endGame() {
+            scores.push({ name: playerName, score: score });
+            updateScoreTable();
+            document.querySelector(".login-container").style.display = "block";
+            canvas.style.display = "none";
+        }
+
+        function updateScoreTable() {
+            let table = document.getElementById("score-table");
+            table.style.display = "table";
+            table.innerHTML = "<tr><th>Jméno</th><th>Skóre</th></tr>";
+            scores.sort((a, b) => b.score - a.score);
+            scores.forEach(entry => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = entry.name;
+                row.insertCell(1).textContent = entry.score;
+            });
         }
     </script>
 </body>

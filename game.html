@@ -30,7 +30,7 @@
             display: none;
             background: url('images/finally.jpeg') no-repeat center center;
             background-size: cover;
-              }
+        }
         #falling-leaves {
             position: fixed;
             top: 0;
@@ -47,7 +47,7 @@
             opacity: 0.8;
             animation: fall linear infinite;
         }
-         @keyframes fall {
+        @keyframes fall {
             from {
                 transform: translateY(-50px) rotate(0deg);
                 opacity: 1;
@@ -77,6 +77,8 @@
     <h1>🥷Ninja🥷</h1>
     <p>RUN!</p>
     
+    <div id="falling-leaves"></div>
+    
     <div class="login-container">
         <label for="player-name">Zadej své jméno: </label>
         <input type="text" id="player-name" placeholder="Tvé jméno">
@@ -84,7 +86,7 @@
     </div>
 
     <div class="game-container">
-        <canvas id="gameCanvas" width="1000" height="700"></canvas>
+        <canvas id="gameCanvas" width="1600" height="700"></canvas>
     </div>
     
     <table id="score-table">
@@ -100,7 +102,12 @@
             leaf.src = "images/listy.png";
             leaf.className = "leaf";
             leaf.style.left = Math.random() * window.innerWidth + "px";
+            leaf.style.top = "-50px";
+            leaf.style.width = Math.random() * 30 + 20 + "px"; 
+            leaf.style.height = leaf.style.width; 
+            leaf.style.opacity = Math.random();
             leaf.style.animationDuration = (Math.random() * 5 + 3) + "s";
+            leaf.style.position = "absolute";
             document.getElementById("falling-leaves").appendChild(leaf);
             setTimeout(() => leaf.remove(), 7000);
         }

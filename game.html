@@ -111,7 +111,7 @@
             extraLife: "images/srdce.png"
         };
         let isInvisible = false;
-        let jumpBoost = false;
+        let gameOver = false;
         
         function createPowerUp() {
             if (Math.random() < 0.02) {
@@ -123,9 +123,9 @@
         function checkPowerUpCollision() {
             for (let i = powerUps.length - 1; i >= 0; i--) {
                 if (
-                    player.x < powerUps[i].x + powerUps[i].width &&
+                    player.x < powerUps[i].x + 40 &&
                     player.x + player.width > powerUps[i].x &&
-                    player.y < powerUps[i].y + powerUps[i].height &&
+                    player.y < powerUps[i].y + 40 &&
                     player.y + player.height > powerUps[i].y
                 ) {
                     activatePowerUp(powerUps[i].type);
@@ -155,27 +155,6 @@
                 img.src = powerUpImages[powerUp.type];
                 ctx.drawImage(img, powerUp.x, powerUp.y, 40, 40);
             }
-        }
-        
-        function update() {
-            if (gameOver) return;
-            if (keys["ArrowUp"] && player.y > 0) player.y -= jumpBoost ? player.speed * 2 : player.speed;
-            if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
-            if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
-            if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
-            
-            enemySpeed = 5 + Math.floor(score / 10);
-            createPowerUp();
-            checkPowerUpCollision();
-        }
-        
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-            for (let enemy of enemies) {
-                ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
-            }
-            drawPowerUps();
         }
     </script>
 </body>

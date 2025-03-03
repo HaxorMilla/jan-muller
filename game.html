@@ -31,15 +31,6 @@
             background: url('images/finally.jpeg') no-repeat center center;
             background-size: cover;
         }
-        #falling-leaves {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
         #score-table {
             display: none;
             border-collapse: collapse;
@@ -59,8 +50,6 @@
 <body>
     <h1>Silent Ninja</h1>
     <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
-    
-    <div id="falling-leaves"></div>
     
     <div class="login-container">
         <label for="player-name">Zadej své jméno: </label>
@@ -93,15 +82,23 @@
         let score = 0;
         let scores = [];
         let playerName = "";
+        let keys = {};
+
+        window.addEventListener("keydown", (event) => {
+            keys[event.key] = true;
+        });
+        window.addEventListener("keyup", (event) => {
+            keys[event.key] = false;
+        });
 
         function startGame() {
             playerName = document.getElementById("player-name").value || "Neznámý hráč";
             document.querySelector(".login-container").style.display = "none";
             canvas.style.display = "block";
+            document.getElementById("score-table").style.display = "none";
             gameOver = false;
             score = 0;
             enemies = [];
-            document.getElementById("score-table").style.display = "none";
             requestAnimationFrame(gameLoop);
         }
 

@@ -118,11 +118,15 @@
         function startGame() {
             document.querySelector(".login-container").style.display = "none";
             canvas.style.display = "block";
+            gameOver = false;
             score = 0;
+            enemies = [];
+            document.getElementById("game-over-message").style.display = "none";
             gameLoop();
         }
         
         function update() {
+            if (gameOver) return;
             if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
             if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
             

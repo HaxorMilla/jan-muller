@@ -22,12 +22,13 @@
             flex-direction: column;
         }
         canvas {
-            height: 500px;
             width: 800px;
+            height: 500px;
             position: relative;
             z-index: 10;
             display: none;
-            background: black;
+            background: url('images/finally.jpeg') no-repeat center center;
+            background-size: cover;
         }
         #game-over-message {
             display: none;
@@ -58,18 +59,21 @@
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
-
+        
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
 
-        let player = { x: 375, y: 450, width: 50, height: 50, speed: 10 };
-        let obstacles = [];
+        let player = { x: 50, y: 400, width: 50, height: 50, speed: 10 };
+        let enemies = [];
         let gameOver = false;
         let keys = {};
 
-        window.addEventListener("keydown", (event) => keys[event.key] = true);
+        window.addEventListener("keydown", (event) => {
+            keys[event.key] = true;
+            if (event.key.toUpperCase() === "R" && gameOver) restartGame();
+        });
         window.addEventListener("keyup", (event) => keys[event.key] = false);
 
         function startGame() {
@@ -84,17 +88,17 @@
         }
 
         function update() {
-            if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
-            if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
-
-            for (let i = 0; i < obstacles.length; i++) {
-                obstacles[i].y += 5;
+            if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
+            if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
+            
+            for (let i = 0; i < enemies.length; i++) {
+                enemies[i].x -= 5;
 
                 if (
-                    player.x < obstacles[i].x + obstacles[i].width &&
-                    player.x + player.width > obstacles[i].x &&
-                    player.y < obstacles[i].y + obstacles[i].height &&
-                    player.y + player.height > obstacles[i].y
+                    player.x < enemies[i].x + enemies[i].width &&
+                    player.x + player.width > enemies[i].x &&
+                    player.y < enemies[i].y + enemies[i].height &&
+                    player.y + player.height > enemies[i].y
                 ) {
                     gameOver = true;
                     endGame();
@@ -102,19 +106,19 @@
                 }
             }
             
-            obstacles = obstacles.filter(obs => obs.y < canvas.height);
+            enemies = enemies.filter(enemy => enemy.x > -enemy.width);
 
             if (Math.random() < 0.05) {
-                let randomX = Math.random() * (canvas.width - 50);
-                obstacles.push({ x: randomX, y: -50, width: 50, height: 50 });
+                let randomY = Math.random() * (canvas.height - 50);
+                enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
             }
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-            for (let i = 0; i < obstacles.length; i++) {
-                ctx.drawImage(enemyImage, obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+            for (let i = 0; i < enemies.length; i++) {
+                ctx.drawImage(enemyImage, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
             }
         }
 
@@ -128,6 +132,14 @@
 
         function endGame() {
             document.getElementById("game-over-message").style.display = "block";
+        }
+
+        function restartGame() {
+            player.y = 400;
+            enemies = [];
+            gameOver = false;
+            document.getElementById("game-over-message").style.display = "none";
+            gameLoop();
         }
     </script>
 </body>

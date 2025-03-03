@@ -122,7 +122,7 @@
             score = 0;
             enemies = [];
             document.getElementById("game-over-message").style.display = "none";
-            gameLoop();
+            requestAnimationFrame(gameLoop);
         }
         
         function update() {
@@ -130,14 +130,12 @@
             if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
             if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
             
-            for (let i = 0; i < enemies.length; i++) {
+            for (let i = enemies.length - 1; i >= 0; i--) {
                 enemies[i].x -= 5;
                 if (enemies[i].x + enemies[i].width < 0) {
                     score++;
                     enemies.splice(i, 1);
-                    i--;
-                }
-                if (
+                } else if (
                     player.x < enemies[i].x + enemies[i].width &&
                     player.x + player.width > enemies[i].x &&
                     player.y < enemies[i].y + enemies[i].height &&
@@ -167,9 +165,9 @@
         }
         
         function gameLoop() {
+            update();
+            draw();
             if (!gameOver) {
-                update();
-                draw();
                 requestAnimationFrame(gameLoop);
             }
         }
@@ -178,7 +176,14 @@
             document.getElementById("game-over-message").style.display = "block";
             document.getElementById("final-score").textContent = score;
         }
+        
+        function restartGame() {
+            gameOver = false;
+            score = 0;
+            enemies = [];
+            document.getElementById("game-over-message").style.display = "none";
+            requestAnimationFrame(gameLoop);
+        }
     </script>
 </body>
 </html>
-

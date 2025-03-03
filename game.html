@@ -5,20 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninja</title>
     <style>
-        @keyframes falling {
-            from {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        @keyframes blink {
-            from { opacity: 1; }
-            to { opacity: 0.5; }
-        }
         body {
             text-align: center;
             font-family: Arial, sans-serif;
@@ -72,20 +58,20 @@
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
-        const background = new Image();
-        background.src = "images/finally.jpeg";
+
         const playerImage = new Image();
         playerImage.src = "images/ninja.png";
         const enemyImage = new Image();
         enemyImage.src = "images/enemy.png";
-        
-        let player = { x: 50, y: 400, size: 40, speed: 20 };
-        let enemy = { x: 600, y: 400, size: 50 };
+
+        let player = { x: 375, y: 450, width: 50, height: 50, speed: 10 };
+        let obstacles = [];
+        let gameOver = false;
         let keys = {};
-        
-        window.addEventListener("keydown", (e) => keys[e.key] = true);
-        window.addEventListener("keyup", (e) => keys[e.key] = false);
-        
+
+        window.addEventListener("keydown", (event) => keys[event.key] = true);
+        window.addEventListener("keyup", (event) => keys[event.key] = false);
+
         function startGame() {
             const playerName = document.getElementById("player-name").value;
             if (!playerName) {
@@ -96,28 +82,50 @@
             canvas.style.display = "block";
             gameLoop();
         }
-        
+
         function update() {
             if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
-            if (keys["ArrowRight"] && player.x < canvas.width - player.size) player.x += player.speed;
-            if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
-            if (keys["ArrowDown"] && player.y < canvas.height - player.size) player.y += player.speed;
+            if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
+
+            for (let i = 0; i < obstacles.length; i++) {
+                obstacles[i].y += 5;
+
+                if (
+                    player.x < obstacles[i].x + obstacles[i].width &&
+                    player.x + player.width > obstacles[i].x &&
+                    player.y < obstacles[i].y + obstacles[i].height &&
+                    player.y + player.height > obstacles[i].y
+                ) {
+                    gameOver = true;
+                    endGame();
+                    return;
+                }
+            }
             
-            if (player.x < enemy.x + enemy.size && player.x + player.size > enemy.x && 
-                player.y < enemy.y + enemy.size && player.y + player.size > enemy.y) {
-                endGame();
+            obstacles = obstacles.filter(obs => obs.y < canvas.height);
+
+            if (Math.random() < 0.05) {
+                let randomX = Math.random() * (canvas.width - 50);
+                obstacles.push({ x: randomX, y: -50, width: 50, height: 50 });
             }
         }
-        
-        function gameLoop() {
+
+        function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-            ctx.drawImage(playerImage, player.x, player.y, player.size, player.size);
-            ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.size, enemy.size);
-            update();
-            requestAnimationFrame(gameLoop);
+            ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+            for (let i = 0; i < obstacles.length; i++) {
+                ctx.drawImage(enemyImage, obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+            }
         }
-        
+
+        function gameLoop() {
+            if (!gameOver) {
+                update();
+                draw();
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
         function endGame() {
             document.getElementById("game-over-message").style.display = "block";
         }

@@ -118,6 +118,7 @@
         function startGame() {
             document.querySelector(".login-container").style.display = "none";
             canvas.style.display = "block";
+            score = 0;
             gameLoop();
         }
         
@@ -127,9 +128,23 @@
             
             for (let i = 0; i < enemies.length; i++) {
                 enemies[i].x -= 5;
+                if (enemies[i].x + enemies[i].width < 0) {
+                    score++;
+                    enemies.splice(i, 1);
+                    i--;
+                }
+                if (
+                    player.x < enemies[i].x + enemies[i].width &&
+                    player.x + player.width > enemies[i].x &&
+                    player.y < enemies[i].y + enemies[i].height &&
+                    player.y + player.height > enemies[i].y
+                ) {
+                    gameOver = true;
+                    endGame();
+                    return;
+                }
             }
             
-            enemies = enemies.filter(enemy => enemy.x > -enemy.width);
             if (Math.random() < 0.05) {
                 let randomY = Math.random() * (canvas.height - 50);
                 enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
@@ -142,6 +157,9 @@
             for (let i = 0; i < enemies.length; i++) {
                 ctx.drawImage(enemyImage, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
             }
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.fillText("Skóre: " + score, 10, 30);
         }
         
         function gameLoop() {
@@ -152,6 +170,10 @@
             }
         }
         
+        function endGame() {
+            document.getElementById("game-over-message").style.display = "block";
+            document.getElementById("final-score").textContent = score;
+        }
     </script>
 </body>
 </html>

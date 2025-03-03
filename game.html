@@ -23,8 +23,8 @@
             flex-direction: column;
         }
         canvas {
-            width: 1600px;
-            height: 600px;
+            width: 1000px;
+            height: 700px;
             position: relative;
             z-index: 10;
             display: none;
@@ -48,8 +48,8 @@
     </style>
 </head>
 <body>
-    <h1>Ninja rush na počest Martina a Lukáše!</h1>
-    <p>Extrém Luky! Martine kličky a otočky!</p>
+    <h1>Silent Ninja</h1>
+    <p>Dostaň se nepozorovaně k cíli jako ninja!</p>
     
     <div class="login-container">
         <label for="player-name">Zadej své jméno: </label>
@@ -58,7 +58,7 @@
     </div>
 
     <div class="game-container">
-        <canvas id="gameCanvas" width="800" height="500"></canvas>
+        <canvas id="gameCanvas" width="1000" height="700"></canvas>
     </div>
     
     <table id="score-table">
@@ -106,6 +106,8 @@
             if (gameOver) return;
             if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
             if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
+            if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
+            if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
             
             for (let i = enemies.length - 1; i >= 0; i--) {
                 enemies[i].x -= 5;

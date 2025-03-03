@@ -40,6 +40,16 @@
             pointer-events: none;
             z-index: 1;
         }
+        @keyframes falling {
+            from {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
         #game-over-message {
             display: none;
             font-size: 30px;
@@ -84,6 +94,64 @@
             setTimeout(() => leaf.remove(), 7000);
         }
         setInterval(createLeaf, 400);
+        
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        const playerImage = new Image();
+        playerImage.src = "images/ninja.png";
+        const enemyImage = new Image();
+        enemyImage.src = "images/enemy.png";
+        
+        let player = { x: 50, y: 400, width: 50, height: 50, speed: 10 };
+        let enemies = [];
+        let gameOver = false;
+        let score = 0;
+        let keys = {};
+        
+        window.addEventListener("keydown", (event) => {
+            keys[event.key] = true;
+            if (event.key.toUpperCase() === "R" && gameOver) restartGame();
+        });
+        window.addEventListener("keyup", (event) => keys[event.key] = false);
+        
+        function startGame() {
+            document.querySelector(".login-container").style.display = "none";
+            canvas.style.display = "block";
+            gameLoop();
+        }
+        
+        function update() {
+            if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
+            if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
+            
+            for (let i = 0; i < enemies.length; i++) {
+                enemies[i].x -= 5;
+            }
+            
+            enemies = enemies.filter(enemy => enemy.x > -enemy.width);
+            if (Math.random() < 0.05) {
+                let randomY = Math.random() * (canvas.height - 50);
+                enemies.push({ x: canvas.width, y: randomY, width: 50, height: 50 });
+            }
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+            for (let i = 0; i < enemies.length; i++) {
+                ctx.drawImage(enemyImage, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
+            }
+        }
+        
+        function gameLoop() {
+            if (!gameOver) {
+                update();
+                draw();
+                requestAnimationFrame(gameLoop);
+            }
+        }
+        
     </script>
 </body>
 </html>
